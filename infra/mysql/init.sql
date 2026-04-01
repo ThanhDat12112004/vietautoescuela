@@ -180,9 +180,6 @@ CREATE TABLE user_answers (
     FOREIGN KEY (selected_answer_id) REFERENCES answers(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Chi tiet dap an cua nguoi dung';
 
-INSERT INTO users (id, username, email, password_hash, role, full_name, is_active)
-VALUES (1, 'seed_admin', 'seed_admin@local.test', '$2a$10$A0xbDZbAp0ytSBgceT3U6uvzxEGfZ2lM1AH3P/nCn4coK9eEyyxA.', 'admin', 'Seed Admin', TRUE)
-ON DUPLICATE KEY UPDATE id = id;
 
 INSERT INTO quiz_topic_groups (id, code, name_vi, name_es, description_vi, description_es, is_active)
 VALUES
@@ -328,46 +325,6 @@ ON DUPLICATE KEY UPDATE question_id = question_id;
 -- Bulk synthetic seed data (large dataset)
 -- ---------------------------------------------------------------------------
 
-INSERT INTO users (username, email, password_hash, role, full_name, is_active)
-SELECT
-    gen_users.username,
-    gen_users.email,
-    '$2a$10$A0xbDZbAp0ytSBgceT3U6uvzxEGfZ2lM1AH3P/nCn4coK9eEyyxA.',
-    gen_users.role,
-    gen_users.full_name,
-    TRUE
-FROM (
-    SELECT
-        n,
-        CASE
-            WHEN n <= 40 THEN CONCAT('teacher_', LPAD(n, 4, '0'))
-            ELSE CONCAT('student_', LPAD(n - 40, 5, '0'))
-        END AS username,
-        CASE
-            WHEN n <= 40 THEN CONCAT('teacher_', LPAD(n, 4, '0'), '@seed.local')
-            ELSE CONCAT('student_', LPAD(n - 40, 5, '0'), '@seed.local')
-        END AS email,
-        CASE
-            WHEN n <= 40 THEN 'teacher'
-            ELSE 'student'
-        END AS role,
-        CASE
-            WHEN n <= 40 THEN CONCAT('Teacher Seed ', LPAD(n, 4, '0'))
-            ELSE CONCAT('Student Seed ', LPAD(n - 40, 5, '0'))
-        END AS full_name
-    FROM (
-        SELECT ones.n + tens.n * 10 + hundreds.n * 100 AS n
-        FROM
-            (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) ones
-            CROSS JOIN
-            (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) tens
-            CROSS JOIN
-            (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3) hundreds
-    ) seq_users
-    WHERE n BETWEEN 1 AND 360
-) gen_users
-LEFT JOIN users u ON u.username = gen_users.username
-WHERE u.id IS NULL;
 
 INSERT INTO material_types (material_topic_group_id, code, name_vi, name_es, description_vi, description_es, created_by)
 SELECT

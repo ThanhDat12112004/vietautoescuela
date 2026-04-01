@@ -36,12 +36,6 @@ const topRowBorderClass: Record<number, string> = {
   5: 'border-slate-500/45 ring-1 ring-slate-400/30',
 };
 
-const DEFAULT_PERIOD_AVAILABILITY: Record<LeaderboardPeriod, boolean> = {
-  all: true,
-  week: true,
-  month: true,
-};
-
 /** Huy chương SVG (top 1–5) hoặc số thứ hạng */
 function RankBadge({ rank, compact }: { rank: number; compact?: boolean }) {
   const svgSrc = RANK_BADGE_SVG[rank];
@@ -76,7 +70,7 @@ function RankBadge({ rank, compact }: { rank: number; compact?: boolean }) {
 const Leaderboard = () => {
   const { t } = useLanguage();
   const [failedAvatarIds, setFailedAvatarIds] = useState<Record<number, true>>({});
-  const [period, setPeriod] = useState<LeaderboardPeriod>('all');
+  const period: LeaderboardPeriod = 'all';
   const selfRowRef = useRef<HTMLLIElement | null>(null);
 
   const myUserId = getStoredAuth()?.user?.id ?? null;
@@ -100,24 +94,6 @@ const Leaderboard = () => {
         : '',
     [leaderboardError, t]
   );
-
-  const { data: periodAvailability = DEFAULT_PERIOD_AVAILABILITY } = useQuery<
-    Record<LeaderboardPeriod, boolean>
-  >({
-    queryKey: ['leaderboard-availability'],
-    queryFn: async () => {
-      const [weekRows, monthRows] = await Promise.all([
-        getLeaderboardStats(1, 'week').catch(() => [] as LeaderboardUser[]),
-        getLeaderboardStats(1, 'month').catch(() => [] as LeaderboardUser[]),
-      ]);
-      return {
-        all: true,
-        week: weekRows.length > 0,
-        month: monthRows.length > 0,
-      };
-    },
-    staleTime: 30_000,
-  });
 
   const {
     data: myRank = null,
@@ -148,27 +124,12 @@ const Leaderboard = () => {
     setFailedAvatarIds((prev) => ({ ...prev, [id]: true }));
   };
 
-  useEffect(() => {
-    if (period !== 'all' && !periodAvailability[period]) {
-      setPeriod('all');
-    }
-  }, [period, periodAvailability]);
-
   const ranked = useMemo(() => rows.map((item, index) => ({ ...item, rank: index + 1 })), [rows]);
 
   const topScore = useMemo(() => Number(ranked[0]?.total_score || 0), [ranked]);
   const totalCompleted = useMemo(
     () => ranked.reduce((sum, user) => sum + Number(user.total_quizzes || 0), 0),
     [ranked]
-  );
-
-  const periodTabs = useMemo(
-    () => [
-      { key: 'all' as const, label: t('Tổng', 'Global') },
-      { key: 'week' as const, label: t('Tuần', 'Semanal') },
-      { key: 'month' as const, label: t('Tháng', 'Mensual') },
-    ],
-    [t]
   );
 
   useEffect(() => {
@@ -220,38 +181,10 @@ const Leaderboard = () => {
                   </h1>
                   <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-foreground/72 md:text-[0.97rem]">
                     {t(
-                      'Top 10 theo điểm tích lũy và độ chính xác. Chọn chu kỳ để xem tổng/tuần/tháng.',
-                      'Top 10 por puntos y precisión. Cambia el periodo para ver global/semanal/mensual.'
+                      'Top 10 theo điểm tích lũy và độ chính xác.',
+                      'Top 10 por puntos y precisión acumulada.'
                     )}
                   </p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {periodTabs.map((tab) => (
-                      <button
-                        key={tab.key}
-                        type="button"
-                        onClick={() => setPeriod(tab.key)}
-                        disabled={!periodAvailability[tab.key]}
-                        className={cn(
-                          'rounded-full border px-3 py-1.5 text-xs font-bold uppercase tracking-wide transition-colors',
-                          !periodAvailability[tab.key] && 'cursor-not-allowed opacity-45',
-                          period === tab.key
-                            ? 'border-primary bg-primary/15 text-primary'
-                            : 'border-border bg-background text-foreground/70 hover:bg-muted'
-                        )}
-                      >
-                        {tab.label}
-                        {!periodAvailability[tab.key] ? ` (${t('Khóa', 'Bloq')})` : ''}
-                      </button>
-                    ))}
-                  </div>
-                  {!periodAvailability.week || !periodAvailability.month ? (
-                    <p className="mt-2 text-xs text-muted-foreground">
-                      {t(
-                        'Dữ liệu Tuần/Tháng đang được cập nhật, tab sẽ mở khi có lượt làm bài.',
-                        'Los datos semanal/mensual se están actualizando; se abrirán cuando haya intentos.'
-                      )}
-                    </p>
-                  ) : null}
 
                   {/* Luôn thấy “tôi ở đâu” — tách biệt bảng, không lẫn với hàng user */}
                   {myUserId && (

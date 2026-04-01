@@ -1,0 +1,10 @@
+FROM mysql:8.0
+
+ENV TZ=Asia/Ho_Chi_Minh
+
+COPY infra/mysql/init.sql /docker-entrypoint-initdb.d/init.sql
+FROM mysql:8.0
+
+ENV TZ=Asia/Ho_Chi_Minh
+
+COPY infra/mysql/init.sql /docker-entrypoint-initdb.d/init.sql

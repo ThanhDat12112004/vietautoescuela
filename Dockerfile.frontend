@@ -2,6 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+ARG INTERNAL_API_BASE_URL=http://vietauto-api-gateway:8080
+
 COPY package.json package-lock.json ./
 COPY apps/web/package.json apps/web/package.json
 
@@ -11,7 +13,11 @@ COPY apps/web apps/web
 
 ENV NODE_ENV=production
 ENV WEB_PORT=3000
+ENV INTERNAL_API_BASE_URL=${INTERNAL_API_BASE_URL}
+ENV API_ORIGIN=${INTERNAL_API_BASE_URL}
 
 RUN npm run build --workspace apps/web
+
+EXPOSE 3000
 
 CMD ["npm", "run", "start", "--workspace", "apps/web"]
