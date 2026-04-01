@@ -5,115 +5,95 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useLanguage } from '@/hooks/useLanguage';
 import {
-  getHomeSummary,
-  getMaterialsBySubject,
   getQuizTypes,
   getQuizzes,
-  getSubjects,
-  type HomeSummary,
   type QuizListItem,
   type QuizType,
+} from '@/lib/api/quiz';
+import {
+  getMaterialCountsBySubject,
+  getSubjects,
   type Subject,
-} from '@/lib/api';
+} from '@/lib/api/materials';
+import { getHomeSummary } from '@/lib/api/quiz';
+import type { HomeSummary } from '@/lib/api/types';
 import { getStoredAuth } from '@/lib/auth';
 import { cn } from '@/lib/utils';
+import {
+  ctaPrimaryGlowButtonClass,
+  ctaSecondaryGlowButtonClass,
+  fadeUp,
+  indexCardOpenChipClass,
+  indexViewAllButtonClass,
+} from '@/features/index/index.constants';
+import {
+  formatQuizTypeName,
+  getQuizTopicDescription,
+} from '@/features/index/index.quiz-type.helpers';
+import {
+  formatCountByLocale,
+  getPrimaryTypeQuestionTotal,
+  getPrimaryTypeQuizzes,
+  getTotalMaterialsCount,
+  getUniqueQuizTypes,
+} from '@/features/index/index.selectors';
 import { motion } from 'framer-motion';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.5 },
-  }),
-};
-
-/** Nút "Xem tất cả" — token brand (index.css + tailwind `brand-*`) */
-const indexViewAllButtonClass =
-  'brand-cta-primary h-11 gap-2 rounded-full border-transparent px-6 text-sm font-semibold text-brand-onCta shadow-brand-cta transition hover:opacity-[0.94] focus-visible:ring-2 focus-visible:ring-primary/45 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-brand-onCta [&_svg]:transition-transform hover:[&_svg]:translate-x-0.5';
-
-/** Chip "Mở" + mũi tên — thẻ đề nhỏ & hàng dưới thẻ tài liệu */
-const indexCardOpenChipClass =
-  'inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/[0.09] px-3 py-1.5 text-[13px] font-semibold text-primary shadow-sm ring-1 ring-primary/10 transition-all group-hover:border-primary/55 group-hover:bg-primary/[0.16] group-hover:shadow group-hover:ring-primary/20 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-transform group-hover:[&_svg]:translate-x-1';
-
-const ctaPrimaryGlowButtonClass =
-  'h-12 w-full rounded-xl border border-[#ffd6de]/55 bg-[linear-gradient(135deg,#a50f38_0%,#c81f55_45%,#e23567_100%)] text-base font-bold text-[#fff4f7] shadow-[0_14px_34px_rgba(167,17,57,0.34)] transition-all duration-200 hover:brightness-110 hover:shadow-[0_18px_42px_rgba(167,17,57,0.42)] [&_svg]:h-5 [&_svg]:w-5';
-
-const ctaSecondaryGlowButtonClass =
-  'h-12 w-full rounded-xl border-2 border-[#d77a93]/55 bg-[linear-gradient(180deg,rgba(255,244,248,0.96)_0%,rgba(255,236,242,0.88)_100%)] text-base font-semibold text-[#851738] shadow-[0_8px_22px_rgba(142,28,58,0.14)] transition-all duration-200 hover:border-[#c95877]/70 hover:bg-[linear-gradient(180deg,rgba(255,246,249,1)_0%,rgba(255,229,237,0.96)_100%)] hover:text-[#73112d] hover:shadow-[0_12px_26px_rgba(142,28,58,0.22)] [&_svg]:h-5 [&_svg]:w-5';
-
 const Index = () => {
   const { t, lang } = useLanguage();
-  const [quizzes, setQuizzes] = useState<QuizListItem[]>([]);
-  const [quizTypeCatalog, setQuizTypeCatalog] = useState<QuizType[]>([]);
-  const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [materialsCountBySubject, setMaterialsCountBySubject] = useState<Record<number, number>>(
-    {}
+  const quizzesQuery = useQuery<QuizListItem[]>({
+    queryKey: ['home', 'quizzes', lang],
+    queryFn: () => getQuizzes(lang, { limit: 24, page: 1 }),
+    staleTime: 60_000,
+  });
+  const quizTypesQuery = useQuery<QuizType[]>({
+    queryKey: ['home', 'quiz-types', lang],
+    queryFn: () => getQuizTypes(lang),
+    staleTime: 60_000,
+  });
+  const subjectsQuery = useQuery<Subject[]>({
+    queryKey: ['home', 'subjects', lang],
+    queryFn: () => getSubjects(lang),
+    staleTime: 60_000,
+  });
+  const homeSummaryQuery = useQuery<HomeSummary>({
+    queryKey: ['home', 'summary'],
+    queryFn: getHomeSummary,
+    staleTime: 30_000,
+  });
+  const materialCountsQuery = useQuery({
+    queryKey: ['home', 'material-counts'],
+    queryFn: getMaterialCountsBySubject,
+    staleTime: 60_000,
+  });
+
+  const quizzes = quizzesQuery.data ?? [];
+  const quizTypeCatalog = quizTypesQuery.data ?? [];
+  const subjects = subjectsQuery.data ?? [];
+  const homeSummary = homeSummaryQuery.data ?? null;
+  const materialsCountBySubject = useMemo(
+    () =>
+      Object.fromEntries(
+        (materialCountsQuery.data ?? []).map((row) => [Number(row.subject_id), Number(row.total || 0)])
+      ),
+    [materialCountsQuery.data]
   );
-  const [homeSummary, setHomeSummary] = useState<HomeSummary | null>(null);
-  const [isLoadingHome, setIsLoadingHome] = useState(true);
+  const isLoadingHome =
+    quizzesQuery.isLoading ||
+    quizTypesQuery.isLoading ||
+    subjectsQuery.isLoading ||
+    homeSummaryQuery.isLoading ||
+    materialCountsQuery.isLoading;
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const benefitsScrollRef = useRef<HTMLDivElement | null>(null);
   const benefitsTabletScrollRef = useRef<HTMLDivElement | null>(null);
   const statsScrollRef = useRef<HTMLDivElement | null>(null);
   const heroSectionRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    let active = true;
-
-    (async () => {
-      if (active) {
-        setIsLoadingHome(true);
-      }
-
-      try {
-        const [quizRows, quizTypeRows, subjectRows, summary] = await Promise.all([
-          getQuizzes(lang),
-          getQuizTypes(lang),
-          getSubjects(lang),
-          getHomeSummary(),
-        ]);
-
-        if (!active) return;
-        setQuizzes(quizRows);
-        setQuizTypeCatalog(quizTypeRows);
-        setSubjects(subjectRows);
-        setHomeSummary(summary);
-
-        if (!subjectRows.length) {
-          setMaterialsCountBySubject({});
-          return;
-        }
-
-        const countEntries = await Promise.all(
-          subjectRows.map(async (subject) => {
-            try {
-              const materials = await getMaterialsBySubject(subject.id, lang);
-              return [subject.id, materials.length] as const;
-            } catch {
-              return [subject.id, 0] as const;
-            }
-          })
-        );
-
-        if (!active) return;
-        setMaterialsCountBySubject(Object.fromEntries(countEntries));
-      } catch {
-        // Keep homepage usable even if data loading fails.
-      } finally {
-        if (active) {
-          setIsLoadingHome(false);
-        }
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [lang]);
 
   useEffect(() => {
     const scrollToHeroCenter = () => {
@@ -305,50 +285,27 @@ const Index = () => {
     };
   }, [lang]);
 
-  const quizTypes = useMemo(() => {
-    const values = quizzes
-      .map((quiz) => quiz.quiz_type)
-      .filter((item): item is string => Boolean(item));
-    return Array.from(new Set(values)).slice(0, 6);
-  }, [quizzes]);
-
-  const normalizeText = (value: string) => value.toLowerCase().trim();
+  const quizTypes = useMemo(() => getUniqueQuizTypes(quizzes, 6), [quizzes]);
 
   const formatQuizType = (value: string) => {
-    const formatted = value.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
-    const matchedType = quizTypeCatalog.find(
-      (quizType) =>
-        normalizeText(quizType.code) === normalizeText(value) ||
-        normalizeText(quizType.name) === normalizeText(formatted)
-    );
-    return matchedType?.name?.trim() ? matchedType.name.trim() : formatted;
+    return formatQuizTypeName(value, quizTypeCatalog);
   };
 
   const getTopicDescriptionByType = (type: string) => {
-    const formattedType = formatQuizType(type);
-    const matchedType = quizTypeCatalog.find(
-      (quizType) =>
-        normalizeText(quizType.code) === normalizeText(type) ||
-        normalizeText(quizType.name) === normalizeText(formattedType)
+    return getQuizTopicDescription(
+      type,
+      quizTypeCatalog,
+      t('Chủ đề này chưa có mô tả chi tiết.', 'Este tema aun no tiene descripcion detallada.')
     );
-
-    if (matchedType?.description?.trim()) {
-      return matchedType.description.trim();
-    }
-
-    return t('Chủ đề này chưa có mô tả chi tiết.', 'Este tema aun no tiene descripcion detallada.');
   };
 
   const primaryQuizType = quizTypes[0] || null;
   const numberLocale = lang === 'vi' ? 'vi-VN' : 'es-ES';
 
-  const formatCount = (value: number) => Number(value || 0).toLocaleString(numberLocale);
+  const formatCount = (value: number) => formatCountByLocale(value, numberLocale);
 
   const primaryTypeQuizzes = useMemo(
-    () =>
-      primaryQuizType
-        ? quizzes.filter((quiz) => String(quiz.quiz_type || '') === String(primaryQuizType))
-        : [],
+    () => getPrimaryTypeQuizzes(quizzes, primaryQuizType),
     [primaryQuizType, quizzes]
   );
 
@@ -358,13 +315,12 @@ const Index = () => {
   );
 
   const primaryTypeQuestionTotal = useMemo(
-    () => primaryTypeQuizzes.reduce((sum, quiz) => sum + Number(quiz.total_questions || 0), 0),
+    () => getPrimaryTypeQuestionTotal(primaryTypeQuizzes),
     [primaryTypeQuizzes]
   );
 
   const totalMaterialsForStats = useMemo(
-    () =>
-      Object.values(materialsCountBySubject).reduce((sum, count) => sum + Number(count || 0), 0),
+    () => getTotalMaterialsCount(materialsCountBySubject),
     [materialsCountBySubject]
   );
 
@@ -418,11 +374,7 @@ const Index = () => {
       .slice(0, 8);
   }, [materialsCountBySubject, subjects]);
 
-  const totalMaterialsCount = useMemo(
-    () =>
-      Object.values(materialsCountBySubject).reduce((sum, count) => sum + Number(count || 0), 0),
-    [materialsCountBySubject]
-  );
+  const totalMaterialsCount = totalMaterialsForStats;
 
   const features = [
     {
