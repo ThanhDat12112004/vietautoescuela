@@ -1,0 +1,80 @@
+# GitLab CI: kiểm tra build Node và build/push image Docker vào Container Registry của project.
+#
+# Yêu cầu: bật Container Registry trên project GitLab.
+# Shared runner GitLab.com hỗ trợ docker:24 + docker:24-dind (privileged).
+#
+# Biến tùy chọn (CI/CD → Variables):
+#   INTERNAL_API_BASE_URL — build-arg cho image frontend (mặc định http://vietauto-api-gateway:8080).
+
+stages:
+  - build
+  - image
+
+variables:
+  DOCKER_TLS_CERTDIR: /certs
+  DOCKER_DRIVER: overlay2
+
+default:
+  interruptible: true
+
+build:node:
+  stage: build
+  image: node:20-alpine
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+  script:
+    - npm ci --cache .npm --prefer-offline
+    - npm run build
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+
+docker:build:
+  stage: image
+  image: docker:24
+  services:
+    - docker:24-dind
+  parallel:
+    matrix:
+      - COMPONENT: frontend
+        DOCKERFILE: Dockerfile.frontend
+      - COMPONENT: api-gateway
+        DOCKERFILE: apps/api-gateway/Dockerfile
+      - COMPONENT: user-service
+        DOCKERFILE: services/user-service/Dockerfile
+      - COMPONENT: quiz-service
+        DOCKERFILE: services/quiz-service/Dockerfile
+      - COMPONENT: media-service
+        DOCKERFILE: services/media-service/Dockerfile
+      - COMPONENT: stats-service
+        DOCKERFILE: services/stats-service/Dockerfile
+      - COMPONENT: materials-service
+        DOCKERFILE: services/materials-service/Dockerfile
+      - COMPONENT: mysql
+        DOCKERFILE: Dockerfile.mysql
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  script:
+    - export IMAGE_TAG="$CI_REGISTRY_IMAGE:$COMPONENT-$CI_COMMIT_SHORT_SHA"
+    - |
+      EXTRA_ARGS=
+      if [ "$COMPONENT" = "frontend" ]; then
+        INTERNAL_URL="${INTERNAL_API_BASE_URL:-http://vietauto-api-gateway:8080}"
+        EXTRA_ARGS="--build-arg INTERNAL_API_BASE_URL=${INTERNAL_URL}"
+      fi
+      docker build -f "$DOCKERFILE" $EXTRA_ARGS -t "$IMAGE_TAG" .
+    - docker push "$IMAGE_TAG"
+    - |
+      if [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$CI_COMMIT_BRANCH" = "dev" ]; then
+        docker tag "$IMAGE_TAG" "$CI_REGISTRY_IMAGE:$COMPONENT-latest"
+        docker push "$CI_REGISTRY_IMAGE:$COMPONENT-latest"
+      fi
+  needs:
+    - job: build:node
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
