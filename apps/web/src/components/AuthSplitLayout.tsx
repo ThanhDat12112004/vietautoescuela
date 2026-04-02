@@ -96,7 +96,7 @@ export default function AuthSplitLayout({ children }: AuthSplitLayoutProps) {
                 />
               </div>
               <p className="mt-3 text-center text-[11px] text-primary/45">
-                {t('Ôn luyện mọi lúc, mọi nơi', 'Practica cuando quieras')}
+                {t('Luyện tập mọi lúc, mọi nơi', 'Practica cuando quieras')}
               </p>
             </div>
           </div>

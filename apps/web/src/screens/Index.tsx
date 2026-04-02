@@ -329,7 +329,7 @@ const Index = () => {
       {
         label: t('Số đề trắc nghiệm', 'Total de examenes'),
         value: isLoadingHome ? '...' : formatCount(quizzes.length),
-        hint: t('Đề ôn luyện theo chuẩn DGT', 'Examenes de practica tipo DGT'),
+        hint: t('Đề luyện tập theo chuẩn DGT', 'Examenes de practica tipo DGT'),
         icon: BookOpen,
       },
       {
@@ -702,7 +702,7 @@ const Index = () => {
           </motion.div>
 
           {quizTypes.length ? (
-            <div className="grid gap-6 lg:min-h-[200px] lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)] lg:items-start">
+            <div className="grid gap-4 sm:gap-5 lg:min-h-[200px] lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)] lg:items-start lg:gap-4">
               {/* Featured Quiz Type - Large Card */}
               <motion.div
                 custom={1}
@@ -714,23 +714,23 @@ const Index = () => {
               >
                 <Link to={`/quizzes?type=${encodeURIComponent(primaryQuizType || '')}`}>
                   <Card className="group h-full overflow-hidden border border-brand-cta-end/25 bg-[linear-gradient(180deg,rgba(255,252,253,0.99)_0%,rgba(255,242,246,0.95)_100%)] shadow-[0_14px_34px_rgba(29,8,15,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_44px_rgba(29,8,15,0.3)]">
-                    <div className="grid h-full min-h-[340px] grid-rows-[1fr_1fr_auto] sm:min-h-[370px] lg:min-h-[400px]">
-                      <div className="relative row-span-2 overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle_at_50%_24%,rgba(255,255,255,0.38)_0%,rgba(255,255,255,0)_62%),linear-gradient(180deg,rgba(255,245,248,0.88)_0%,rgba(255,228,236,0.62)_100%)] p-4 sm:p-5">
+                    <div className="grid h-full min-h-[300px] grid-rows-[minmax(0,1fr)_auto] sm:min-h-[320px] lg:min-h-[340px]">
+                      <div className="relative min-h-[200px] overflow-hidden sm:min-h-[220px] lg:min-h-[240px]">
+                        <div className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle_at_50%_24%,rgba(255,255,255,0.38)_0%,rgba(255,255,255,0)_62%),linear-gradient(180deg,rgba(255,245,248,0.88)_0%,rgba(255,228,236,0.62)_100%)] p-3 sm:p-4">
                           <img
                             src="/brand/quiz-illustration.png"
                             alt={formatQuizType(primaryQuizType || '')}
-                            className="h-full w-full object-contain object-center drop-shadow-[0_22px_24px_rgba(65,10,24,0.34)] saturate-[1.08] transition-transform duration-500 group-hover:scale-[1.04]"
+                            className="max-h-full w-full object-contain object-center drop-shadow-[0_22px_24px_rgba(65,10,24,0.34)] saturate-[1.08] transition-transform duration-500 group-hover:scale-[1.04]"
                             loading="lazy"
                           />
                         </div>
                         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(111,21,39,0.36)_0%,rgba(151,38,63,0.18)_50%,rgba(173,62,80,0.08)_100%)]" />
-                        <div className="absolute left-4 top-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/60 bg-white/36 px-4 py-2 text-sm font-semibold text-[#7a2038] backdrop-blur-sm sm:left-5 sm:top-5">
+                        <div className="absolute left-3 top-3 inline-flex w-fit items-center gap-2 rounded-full border border-white/60 bg-white/36 px-3 py-1.5 text-xs font-semibold text-[#7a2038] backdrop-blur-sm sm:left-4 sm:top-4 sm:px-4 sm:py-2 sm:text-sm">
                           <Target className="h-4 w-4" />
                           {t('Đề nổi bật', 'Destacado')}
                         </div>
                       </div>
-                      <CardContent className="row-span-1 border-t border-brand-cta-end/25 bg-[linear-gradient(135deg,rgba(104,22,40,0.94)_0%,rgba(140,33,55,0.92)_100%)] p-4 text-white sm:p-5">
+                      <CardContent className="border-t border-brand-cta-end/25 bg-[linear-gradient(135deg,rgba(104,22,40,0.94)_0%,rgba(140,33,55,0.92)_100%)] p-3 text-white sm:p-4">
                         <div className="grid gap-3">
                           <div className="flex flex-wrap items-start justify-between gap-3">
                             <h3 className="font-display text-2xl font-bold text-white sm:text-[1.65rem]">
@@ -759,7 +759,7 @@ const Index = () => {
               </motion.div>
 
               {/* Other Quiz Types - Smaller Cards */}
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+              <div className="grid gap-2 sm:grid-cols-2 sm:gap-2.5 lg:grid-cols-1 lg:gap-2">
                 {quizTypes.slice(1, 5).length ? (
                   quizTypes.slice(1, 5).map((type, i) => {
                     const typeQuizzes = quizzes.filter(
@@ -789,39 +789,39 @@ const Index = () => {
                         <Link to={`/quizzes?type=${encodeURIComponent(type)}`} className="block">
                           <Card className="group overflow-hidden border border-border/80 bg-[linear-gradient(170deg,rgba(255,255,255,0.98)_0%,rgba(252,247,248,0.93)_100%)] shadow-[0_6px_18px_rgba(20,27,45,0.05)] transition-all hover:-translate-y-1 hover:border-primary/35 hover:shadow-[0_12px_26px_rgba(20,27,45,0.12)]">
                             <CardContent className="p-0">
-                              <div className="flex">
-                                <div className="flex w-[5rem] shrink-0 flex-col items-center justify-center gap-2 self-stretch rounded-l-xl border-r border-primary/15 bg-[linear-gradient(180deg,rgba(122,32,56,0.2)_0%,rgba(122,32,56,0.08)_100%)] px-2 py-2.5 sm:w-[5.25rem]">
+                              <div className="flex gap-2.5 sm:gap-3">
+                                <div className="flex w-[4.25rem] shrink-0 flex-col items-center justify-center gap-1 self-stretch rounded-l-xl border-r border-primary/15 bg-[linear-gradient(180deg,rgba(122,32,56,0.2)_0%,rgba(122,32,56,0.08)_100%)] px-1.5 py-1.5 sm:w-[4.5rem] sm:py-2">
                                   <img
                                     src="/brand/test.png"
                                     alt=""
-                                    className="h-12 w-12 object-contain object-center drop-shadow-[0_4px_10px_rgba(122,32,56,0.22)] transition-transform duration-300 group-hover:scale-[1.04] sm:h-14 sm:w-14"
+                                    className="h-9 w-9 object-contain object-center drop-shadow-[0_4px_10px_rgba(122,32,56,0.22)] transition-transform duration-300 group-hover:scale-[1.04] sm:h-10 sm:w-10"
                                     loading="lazy"
                                     aria-hidden
                                   />
-                                  <span className="font-display text-base font-bold tabular-nums leading-none text-primary sm:text-lg">
+                                  <span className="font-display text-xs font-bold tabular-nums leading-none text-primary sm:text-sm">
                                     {typeQuizzes.length}+
                                   </span>
                                 </div>
-                                <div className="flex min-w-0 flex-1 flex-col p-3">
+                                <div className="flex min-w-0 flex-1 flex-col py-1.5 pr-1.5 sm:py-2 sm:pr-2">
                                   <div className="mb-0.5 flex items-start justify-between gap-2">
-                                    <h4 className="min-w-0 flex-1 font-display text-base font-bold leading-snug text-foreground">
+                                    <h4 className="min-w-0 flex-1 font-display text-[0.9375rem] font-bold leading-snug text-foreground sm:text-base">
                                       {formatQuizType(type)}
                                     </h4>
-                                    <span className={cn(indexCardOpenChipClass, 'shrink-0')}>
+                                    <span className={cn(indexCardOpenChipClass, 'ml-1 shrink-0 self-start')}>
                                       {t('Mở', 'Abrir')}
-                                      <ArrowRight className="h-4 w-4" />
+                                      <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                                     </span>
                                   </div>
-                                  <p className="mb-1.5 text-[12px] font-semibold tabular-nums text-primary/90 sm:text-[13px]">
+                                  <p className="mb-0.5 text-[11px] font-semibold tabular-nums text-primary/90 sm:mb-1 sm:text-[12px]">
                                     {lang === 'vi'
                                       ? `${typeQuizzes.length} bài • ${typeQuestionTotal.toLocaleString('vi-VN')} câu hỏi`
                                       : `${typeQuizzes.length} exámenes • ${typeQuestionTotal.toLocaleString('es-ES')} preguntas`}
                                   </p>
-                                  <p className="mb-0.5 line-clamp-2 text-sm text-muted-foreground">
+                                  <p className="line-clamp-2 text-[13px] leading-snug text-muted-foreground sm:text-sm">
                                     {typeDescription}
                                   </p>
                                   {completedCount > 0 && (
-                                    <p className="mt-1 text-[11px] font-medium text-primary/85">
+                                    <p className="mt-0.5 text-[10px] font-medium text-primary/85 sm:mt-1 sm:text-[11px]">
                                       {lang === 'vi'
                                         ? `Đã hoàn thành: ${completionRate}%`
                                         : `Completado: ${completionRate}%`}
@@ -896,15 +896,15 @@ const Index = () => {
       </section>
 
       {/* Materials Section - Clean Carousel */}
-      <section className="relative bg-background pt-8 pb-10 sm:pt-9 sm:pb-11">
-        <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-background pt-6 pb-8 sm:pt-7 sm:pb-9">
+        <div className="container mx-auto max-w-6xl px-3 sm:px-5 lg:px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
             custom={0}
-            className="mb-6 grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start"
+            className="mb-3 grid gap-2 sm:mb-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start"
           >
             <div className="max-w-2xl">
               <span className="inline-flex rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
@@ -913,7 +913,7 @@ const Index = () => {
               <h2 className="mt-2 font-display text-3xl font-bold text-foreground sm:text-4xl">
                 {t('Tài liệu học trọng tâm', 'Temario de estudio clave')}
               </h2>
-              <p className="mt-3 max-w-xl text-base font-medium leading-relaxed text-[#4a3038] sm:text-lg">
+              <p className="mt-2 max-w-xl text-base font-medium leading-snug text-[#4a3038] sm:mt-2.5 sm:text-lg sm:leading-relaxed">
                 {t(
                   'Nội dung thiết yếu theo chủ đề để học đúng trọng tâm và tiết kiệm thời gian.',
                   'Contenido esencial por temas para estudiar con enfoque y ahorrar tiempo.'
@@ -954,7 +954,7 @@ const Index = () => {
           {subjects.length ? (
             <div className="relative">
               <div
-                className="flex snap-x snap-mandatory gap-2.5 overflow-x-auto overflow-y-hidden pb-2 pl-0.5 pr-1 scrollbar-hide [-webkit-overflow-scrolling:touch] touch-pan-x sm:gap-3.5 sm:pr-0"
+                className="flex snap-x snap-mandatory gap-2 overflow-x-auto overflow-y-hidden pb-1 pl-0 pr-0.5 scrollbar-hide [-webkit-overflow-scrolling:touch] touch-pan-x sm:gap-2.5 sm:pr-0"
                 style={{ touchAction: 'auto', overscrollBehaviorX: 'contain' }}
               >
                 {featuredSubjects.map((subject, i) => (
@@ -973,28 +973,28 @@ const Index = () => {
                       <Card className="group h-full border border-border bg-card transition-all hover:border-primary/30 hover:shadow-lg">
                         <CardContent className="p-0">
                           {/* Image Section — thấp hơn trên mobile để thẻ gọn */}
-                          <div className="flex h-24 w-full items-center justify-center overflow-hidden rounded-t-lg bg-gradient-to-br from-primary/5 to-accent/5 px-2 pt-1.5 sm:h-32 md:h-36">
+                          <div className="flex h-[4.5rem] w-full items-center justify-center overflow-hidden rounded-t-lg bg-gradient-to-br from-primary/5 to-accent/5 px-1.5 pt-1 pb-1 sm:h-[5.25rem] md:h-24">
                             <img
                               src="/brand/materials-illustration.png"
                               alt={subject.name}
-                              className="h-full max-h-[7.5rem] w-full object-contain object-center sm:max-h-none"
+                              className="h-full max-h-[3.75rem] w-full object-contain object-center sm:max-h-[4.25rem] md:max-h-[5rem]"
                               loading="lazy"
                             />
                           </div>
                           {/* Content Section */}
-                          <div className="flex flex-col p-3 sm:p-4">
-                            <h3 className="mb-1.5 line-clamp-2 font-display text-base font-bold leading-snug text-foreground sm:mb-2 sm:text-lg">
+                          <div className="flex flex-col p-2 sm:p-2.5">
+                            <h3 className="mb-1 line-clamp-2 font-display text-[0.9375rem] font-bold leading-snug text-foreground sm:text-base">
                               {subject.name}
                             </h3>
-                            <p className="mb-2 line-clamp-2 text-xs leading-relaxed text-muted-foreground sm:mb-2.5 sm:text-sm">
+                            <p className="mb-1.5 line-clamp-2 text-[11px] leading-snug text-muted-foreground sm:mb-2 sm:text-xs sm:leading-relaxed">
                               {subject.description ||
                                 t(
                                   'Xem tài liệu chi tiết cho chủ đề này',
                                   'Ver el temario de este tema'
                                 )}
                             </p>
-                            <div className="flex shrink-0 items-center justify-between gap-2 border-t border-border/50 pt-2 sm:gap-3 sm:pt-2.5">
-                              <span className="min-w-0 truncate rounded-full border border-primary/20 bg-primary/5 px-2 py-0.5 text-[11px] font-semibold text-primary sm:px-2.5 sm:py-1 sm:text-xs">
+                            <div className="flex shrink-0 items-center justify-between gap-1.5 border-t border-border/50 pt-1.5 sm:gap-2 sm:pt-2">
+                              <span className="min-w-0 truncate rounded-full border border-primary/20 bg-primary/5 px-1.5 py-0.5 text-[10px] font-semibold text-primary sm:px-2 sm:text-[11px]">
                                 {lang === 'vi'
                                   ? `${materialsCountBySubject[subject.id] || 0} tài liệu`
                                   : `${materialsCountBySubject[subject.id] || 0} documentos`}
@@ -1002,11 +1002,11 @@ const Index = () => {
                               <span
                                 className={cn(
                                   indexCardOpenChipClass,
-                                  'shrink-0 px-2 py-1 text-xs sm:px-3 sm:py-1.5 sm:text-[13px] [&_svg]:!size-3.5 sm:[&_svg]:!size-4'
+                                  'shrink-0 !h-7 px-2 py-0 text-[11px] sm:!h-7 sm:px-2.5 sm:text-[12px] [&_svg]:!size-3 sm:[&_svg]:!size-3.5'
                                 )}
                               >
                                 {t('Mở', 'Abrir')}
-                                <ArrowRight className="h-4 w-4" />
+                                <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                               </span>
                             </div>
                           </div>

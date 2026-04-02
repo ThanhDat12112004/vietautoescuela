@@ -3,14 +3,23 @@ import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useLanguage } from '@/hooks/useLanguage';
 import { getQuizzes, type QuizListItem } from '@/lib/api/quiz';
 import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
+import { ChevronDown, Search } from 'lucide-react';
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 
-const ITEMS_PER_PAGE = 18;
+const ITEMS_PER_PAGE = 10;
 
 const QUIZZES_ILLUSTRATION_SRC = '/brand/test.png';
 
@@ -23,6 +32,9 @@ const Quizzes = () => {
   const [activeCategory, setActiveCategory] = useState<string>('');
   const [expandedTopicGroup, setExpandedTopicGroup] = useState<string>('');
   const [progressFilter, setProgressFilter] = useState<'all' | 'done' | 'todo'>('all');
+  const [mobileTopicOpen, setMobileTopicOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const mobileSearchInputRef = useRef<HTMLInputElement>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const prevSearchForPage = useRef<string | undefined>(undefined);
   const deferredSearchQuery = useDeferredValue(searchQuery);
@@ -117,6 +129,14 @@ const Quizzes = () => {
   useEffect(() => {
     setCurrentPage(requestedPage);
   }, [requestedPage]);
+
+  useEffect(() => {
+    if (!mobileSearchOpen) return;
+    const id = window.requestAnimationFrame(() => {
+      mobileSearchInputRef.current?.focus();
+    });
+    return () => window.cancelAnimationFrame(id);
+  }, [mobileSearchOpen]);
 
   const requestedType = useMemo(() => String(searchParams.get('type') || '').trim(), [searchParams]);
   const requestedTopicGroup = useMemo(
@@ -293,6 +313,16 @@ const Quizzes = () => {
     }
   }, [activeCategory, quizCategories]);
 
+  const mobileTopicSummary = useMemo(() => {
+    if (!activeTopicGroup) {
+      return t('Tất cả nhóm và chủ đề', 'Todos los grupos y temas');
+    }
+    if (!activeCategory) {
+      return activeTopicGroup;
+    }
+    return `${activeTopicGroup} › ${activeCategory}`;
+  }, [activeCategory, activeTopicGroup, t]);
+
   const progressCounts = useMemo(() => {
     const scoped =
       activeType === 'all' ? quizzes : quizzes.filter((quiz) => quiz.quiz_type === activeType);
@@ -386,10 +416,10 @@ const Quizzes = () => {
       <Navbar />
       <div className="flex min-h-0 flex-1 flex-col">
         <div className="border-b-2 border-primary/25 bg-card">
-          <div className="w-full px-2 py-5 sm:px-3 md:py-6">
+          <div className="w-full px-3 py-5 sm:px-4 md:py-6 lg:px-5">
             <div className="max-w-3xl border-l-[3px] border-primary/60 pl-3 sm:pl-4">
               <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary/80">
-                {t('Ôn luyện', 'Preparación')}
+                {t('Luyện tập', 'Práctica')}
               </p>
               <h1 className="mt-1.5 font-display text-[1.65rem] font-bold leading-tight tracking-tight text-foreground md:text-[2rem]">
                 {t('Làm bài thi mô phỏng', 'Exámenes simulados')}
@@ -405,18 +435,96 @@ const Quizzes = () => {
         </div>
 
         <div className="flex w-full flex-1 flex-col bg-background">
-          <div className="w-full border-b border-primary/20 bg-card px-2 py-3.5 font-sans shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] sm:px-3">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:gap-4">
-              <div className="min-w-0 flex-1 lg:flex lg:justify-center">
-                  <div className="min-w-0 space-y-1.5 lg:w-full lg:max-w-xl">
-                    <div className="flex items-center gap-3">
-                      <label
-                        htmlFor="quiz-search"
-                        className="shrink-0 text-xs font-semibold uppercase tracking-[0.06em] text-primary/90"
-                      >
-                        {t('Tìm kiếm', 'Buscar')}
-                      </label>
-                    <div className="relative flex-1">
+          <div className="w-full border-b border-primary/20 bg-card px-3 py-3.5 font-sans shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] sm:px-4 xl:px-5">
+            <div className="grid gap-3 lg:grid-cols-[minmax(0,230px)_minmax(0,1fr)_230px] lg:items-end lg:gap-4">
+              <div className="order-2 min-w-0 lg:order-1">
+                <div className="flex items-center justify-between gap-2 lg:block">
+                  <span className="block min-w-0 text-xs font-semibold uppercase tracking-[0.06em] text-primary/90">
+                    {t('Trạng thái làm bài', 'Estado')}
+                  </span>
+                  <button
+                    type="button"
+                    className={cn(
+                      'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-primary/25 bg-white/95 text-primary shadow-[0_6px_16px_rgba(143,34,61,0.1)] ring-1 ring-white/70 transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 lg:hidden',
+                      mobileSearchOpen && 'border-primary/40 ring-primary/25',
+                      normalizeForSearch(searchQuery).length > 0 &&
+                        !mobileSearchOpen &&
+                        'border-primary/35 bg-primary/8'
+                    )}
+                    onClick={() => setMobileSearchOpen((open) => !open)}
+                    aria-expanded={mobileSearchOpen}
+                    aria-controls="quiz-search-mobile"
+                    aria-label={t('Mở ô tìm kiếm', 'Abrir búsqueda')}
+                  >
+                    <Search className="h-[1.15rem] w-[1.15rem]" strokeWidth={2.25} aria-hidden />
+                  </button>
+                </div>
+                <Select
+                  value={progressFilter}
+                  onValueChange={(v) => applyProgressFilter(v as 'all' | 'done' | 'todo')}
+                >
+                  <SelectTrigger
+                    className="mt-1.5 h-11 w-full rounded-lg border-primary/25 bg-white/95 text-base font-semibold text-foreground shadow-[0_8px_22px_rgba(143,34,61,0.12)] ring-1 ring-white/70 focus:ring-primary/35 max-lg:text-[1.05rem]"
+                    aria-label={t('Lọc theo trạng thái', 'Filtrar por estado')}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent align="start" className="rounded-xl">
+                    <SelectItem value="all" className="font-semibold">
+                      {t('Tất cả', 'Todos')}{' '}
+                      <span className="tabular-nums text-muted-foreground">
+                        ({progressCounts.all})
+                      </span>
+                    </SelectItem>
+                    <SelectItem value="done" className="font-semibold">
+                      {t('Đã làm', 'Hechos')}{' '}
+                      <span className="tabular-nums font-bold text-[#b91c1c]">
+                        ({progressCounts.done})
+                      </span>
+                    </SelectItem>
+                    <SelectItem value="todo" className="font-semibold">
+                      {t('Chưa làm', 'Pend.')}{' '}
+                      <span className="tabular-nums font-bold text-emerald-600 dark:text-emerald-400">
+                        ({progressCounts.todo})
+                      </span>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                <div
+                  id="quiz-search-mobile"
+                  className={cn('mt-2 lg:hidden', !mobileSearchOpen && 'hidden')}
+                >
+                  <div className="relative">
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-primary/70"
+                    >
+                      🔍
+                    </span>
+                    <Input
+                      ref={mobileSearchInputRef}
+                      type="search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder={t('Tìm nhanh đề thi...', 'Busca examen rápido...')}
+                      aria-label={t('Tìm kiếm', 'Buscar')}
+                      className="h-12 w-full rounded-lg border border-primary/25 bg-white/95 pl-10 pr-4 text-sm font-semibold text-foreground placeholder:text-muted-foreground/70 shadow-[0_8px_22px_rgba(143,34,61,0.12)] ring-1 ring-white/70 backdrop-blur-sm transition-all focus-visible:ring-2 focus-visible:ring-primary/35"
+                      autoComplete="off"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="order-1 hidden min-w-0 lg:order-2 lg:block">
+                <div className="min-w-0 space-y-1.5 lg:w-full">
+                  <div className="flex items-center gap-3 max-lg:gap-0">
+                    <label
+                      htmlFor="quiz-search"
+                      className="hidden shrink-0 text-xs font-semibold uppercase tracking-[0.06em] text-primary/90 lg:block"
+                    >
+                      {t('Tìm kiếm', 'Buscar')}
+                    </label>
+                    <div className="relative min-w-0 flex-1">
                       <span
                         aria-hidden
                         className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-primary/70"
@@ -429,112 +537,150 @@ const Quizzes = () => {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder={t('Tìm nhanh đề thi...', 'Busca examen rápido...')}
-                        className="h-12 rounded-lg border border-primary/25 bg-white/95 pl-10 pr-4 text-sm font-semibold text-foreground placeholder:text-muted-foreground/70 shadow-[0_8px_22px_rgba(143,34,61,0.12)] ring-1 ring-white/70 backdrop-blur-sm transition-all focus-visible:ring-2 focus-visible:ring-primary/35"
+                        aria-label={t('Tìm kiếm', 'Buscar')}
+                        className="h-12 w-full rounded-lg border border-primary/25 bg-white/95 pl-10 pr-4 text-sm font-semibold text-foreground placeholder:text-muted-foreground/70 shadow-[0_8px_22px_rgba(143,34,61,0.12)] ring-1 ring-white/70 backdrop-blur-sm transition-all focus-visible:ring-2 focus-visible:ring-primary/35"
                         autoComplete="off"
                       />
                     </div>
-                    </div>
+                  </div>
                 </div>
               </div>
 
-
-              <div className="shrink-0 lg:ml-auto lg:flex lg:flex-col lg:items-end">
-                <span className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.06em] text-primary/90 lg:text-right">
-                  {t('Trạng thái làm bài', 'Estado')}
-                </span>
-                <div
-                  className="flex w-full flex-wrap gap-0.5 rounded-full border border-primary/18 bg-primary/[0.06] p-1 shadow-sm lg:w-auto lg:flex-nowrap"
-                  role="group"
-                  aria-label={t('Lọc theo trạng thái', 'Filtrar por estado')}
-                >
-                  {(['all', 'done', 'todo'] as const).map((key) => (
-                    <button
-                      key={key}
-                      type="button"
-                      onClick={() => applyProgressFilter(key)}
-                      className={cn(
-                        'min-h-8 flex-1 whitespace-nowrap rounded-full px-2.5 py-1.5 text-center text-xs font-semibold transition-[color,background-color,box-shadow,border-color] sm:px-3',
-                        key === 'all' &&
-                          (progressFilter === key
-                            ? 'border border-primary/35 bg-primary/18 text-primary shadow-sm'
-                            : 'border border-transparent bg-transparent text-primary/80 hover:bg-primary/10'),
-                        key === 'done' &&
-                          (progressFilter === key
-                            ? 'border border-emerald-300 bg-emerald-100 text-emerald-800 shadow-sm'
-                            : 'border border-transparent bg-transparent text-emerald-700 hover:bg-emerald-50'),
-                        key === 'todo' &&
-                          (progressFilter === key
-                            ? 'border border-rose-300 bg-rose-100 text-rose-800 shadow-sm'
-                            : 'border border-transparent bg-transparent text-rose-700 hover:bg-rose-50')
-                      )}
-                    >
-                      {key === 'all' && (
-                        <>
-                          {t('Tất cả', 'Todos')} <span className="tabular-nums">({progressCounts.all})</span>
-                        </>
-                      )}
-                      {key === 'done' && (
-                        <>
-                          {t('Đã làm', 'Hechos')}{' '}
-                          <span className="tabular-nums">({progressCounts.done})</span>
-                        </>
-                      )}
-                      {key === 'todo' && (
-                        <>
-                          {t('Chưa làm', 'Pend.')}{' '}
-                          <span className="tabular-nums">({progressCounts.todo})</span>
-                        </>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <div className="hidden lg:order-3 lg:block" aria-hidden />
             </div>
           </div>
 
-          <div className="w-full flex-1 px-2 pb-0 pt-0 sm:px-3 sm:pt-0 xl:px-0">
-          <div className="mb-2 grid grid-cols-1 gap-3 rounded-xl border border-primary/20 bg-card p-3 xl:hidden sm:grid-cols-2">
-            <label className="text-sm font-semibold text-primary/90">
-              {t('Loại chủ đề', 'Grupo de tema')}
-              <select
-                className="mt-1 h-11 w-full rounded-md border border-primary/25 bg-background px-3 text-base"
-                value={activeTopicGroup}
-                onChange={(e) => {
-                  const group = e.target.value;
-                  setActiveTopicGroup(group);
-                  setExpandedTopicGroup(group);
-                  setActiveCategory('');
-                  setCurrentPage(1);
-                }}
+          <div className="w-full flex-1 px-0 pb-0 pt-0 max-xl:px-0 sm:pt-0 xl:px-0">
+          <div className="w-full border-b border-primary/20 bg-card px-3 py-3.5 font-sans shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] sm:px-4 xl:hidden">
+            <Popover open={mobileTopicOpen} onOpenChange={setMobileTopicOpen}>
+              <span className="block text-xs font-semibold uppercase tracking-[0.06em] text-primary/90">
+                {t('Loại chủ đề và chủ đề', 'Grupo y tema')}
+              </span>
+              <PopoverTrigger asChild>
+                <button
+                  type="button"
+                  className={cn(
+                    'mt-1.5 flex h-11 w-full items-center justify-between gap-2 rounded-lg border border-primary/25 bg-white/95 px-3 text-left text-base font-semibold shadow-[0_8px_22px_rgba(143,34,61,0.12)] ring-1 ring-white/70 transition-colors max-lg:text-[1.05rem]',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35',
+                    mobileTopicOpen && 'ring-2 ring-primary/35'
+                  )}
+                  aria-expanded={mobileTopicOpen}
+                  aria-label={`${t('Loại chủ đề và chủ đề', 'Grupo y tema')}: ${mobileTopicSummary}`}
+                >
+                  <span className="block min-w-0 truncate whitespace-nowrap text-left text-base leading-snug max-lg:text-[1.05rem]">
+                    {!activeTopicGroup ? (
+                      <span className="font-semibold text-[#6b1b31]">{mobileTopicSummary}</span>
+                    ) : !activeCategory ? (
+                      <span className="font-bold text-[#6b1b31]">{activeTopicGroup}</span>
+                    ) : (
+                      <>
+                        <span className="font-bold text-[#6b1b31]">{activeTopicGroup}</span>
+                        <span className="font-medium text-[#7a2038]"> &gt; {activeCategory}</span>
+                      </>
+                    )}
+                  </span>
+                  <ChevronDown
+                    className={cn(
+                      'h-4 w-4 shrink-0 text-primary/70 transition-transform duration-200',
+                      mobileTopicOpen && 'rotate-180'
+                    )}
+                    aria-hidden
+                  />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent
+                align="start"
+                sideOffset={8}
+                className="max-h-[min(56vh,380px)] w-[calc(100vw-1.5rem)] max-w-[24rem] overflow-hidden border-[#e2c2cb] bg-[#fffafb] p-0 shadow-[0_16px_34px_rgba(95,20,40,0.14)]"
+                onOpenAutoFocus={(e) => e.preventDefault()}
               >
-                <option value="">{t('Tất cả loại chủ đề', 'Todos los grupos')}</option>
-                {quizTopicGroups.map((group) => (
-                  <option key={group} value={group}>
-                    {group}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="text-sm font-semibold text-primary/90">
-              {t('Chủ đề', 'Tema')}
-              <select
-                className="mt-1 h-11 w-full rounded-md border border-primary/25 bg-background px-3 text-base"
-                value={activeCategory}
-                onChange={(e) => {
-                  setActiveCategory(e.target.value);
-                  setCurrentPage(1);
-                }}
-              >
-                <option value="">
-                  {t('Tất cả bài test trong loại này', 'Todos de este grupo')}
-                </option>
-                {(quizCategoriesByGroup[activeTopicGroup] || []).map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-            </label>
+                <div className="max-h-[min(56vh,380px)] overflow-y-auto overscroll-contain bg-[#fffafb]">
+                  <div className="space-y-0 overflow-hidden border border-[#e2c2cb] bg-[#fffafb]">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveTopicGroup('');
+                        setActiveCategory('');
+                        setExpandedTopicGroup('');
+                        setCurrentPage(1);
+                        setMobileTopicOpen(false);
+                      }}
+                      className={cn(
+                        'w-full border-b border-[#e8d0d6] px-3 py-2.5 text-left text-[15px] font-semibold transition-colors',
+                        !activeTopicGroup
+                          ? 'bg-[#fff4f7] text-[#7a2038]'
+                          : 'bg-white/90 text-[#6b1b31] hover:bg-[#fff4f7]/85'
+                      )}
+                    >
+                      {t('Tất cả', 'Todos')}
+                    </button>
+                    {quizTopicGroups.map((group) => {
+                      const isOpen = expandedTopicGroup === group;
+                      const groupCats = quizCategoriesByGroup[group] || [];
+                      return (
+                        <div key={group} className="border-b border-[#e8d0d6] last:border-b-0 bg-white/90">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setActiveTopicGroup(group);
+                              setActiveCategory('');
+                              if (!isOpen) {
+                                setExpandedTopicGroup(group);
+                              } else {
+                                setExpandedTopicGroup('');
+                              }
+                              setCurrentPage(1);
+                            }}
+                            className={cn(
+                              'flex w-full items-center justify-between px-3 py-2.5 text-left text-[15px] font-semibold transition-colors',
+                              activeTopicGroup === group
+                                ? 'bg-[#fff4f7] text-[#7a2038]'
+                                : 'bg-white/80 text-[#6b1b31] hover:bg-[#fff4f7]/75'
+                            )}
+                          >
+                            <span className="min-w-0 pr-2">{group}</span>
+                            <span
+                              className={cn(
+                                'shrink-0 text-lg leading-none',
+                                activeTopicGroup === group ? 'text-[#7a2038]' : 'text-primary/65'
+                              )}
+                            >
+                              {isOpen ? '▾' : '▸'}
+                            </span>
+                          </button>
+                          {isOpen && (
+                            <div className="border-t border-[#e8d0d6] bg-[#fffafb]">
+                              <div className="overflow-hidden">
+                                {groupCats.map((cat) => (
+                                  <button
+                                    key={cat}
+                                    type="button"
+                                    onClick={() => {
+                                      setActiveTopicGroup(group);
+                                      setActiveCategory(cat);
+                                      setCurrentPage(1);
+                                      setMobileTopicOpen(false);
+                                    }}
+                                    className={cn(
+                                      'w-full truncate whitespace-nowrap border-b border-[#f0e3e7] px-3 py-2 pl-4 text-left text-sm transition-colors last:border-b-0',
+                                      activeTopicGroup === group && activeCategory === cat
+                                        ? 'border-l-2 border-l-[#e2c2cb] bg-[#fff4f7] font-semibold text-[#7a2038]'
+                                        : 'bg-white/70 font-normal text-foreground/85 hover:bg-primary/[0.06]'
+                                    )}
+                                  >
+                                    {cat}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
           <div className="grid grid-cols-1 gap-3 xl:grid-cols-[252px_minmax(0,1fr)] xl:gap-0">
             <aside className="hidden border border-primary/20 bg-white p-2 shadow-md xl:block">
@@ -647,26 +793,28 @@ const Quizzes = () => {
               )}
               {filtered.length > 0 && (
               <>
-              <div className="mb-3 border border-[#ece6e8] bg-white px-3 py-2 text-xs sm:text-sm text-primary">
-                <span className="font-semibold">
+              <div className="mb-3 hidden border border-[#ece6e8] bg-white px-3 py-2 text-xs sm:text-sm xl:block">
+                <span className="font-bold text-[#6b1b31]">
                   {activeTopicGroup || t('Tất cả loại chủ đề', 'Todos los grupos')}
                 </span>
                 {!activeCategory && (
                   <>
                     {' '}
                     &gt;{' '}
-                    <span>{t('Tất cả bài test', 'Todos los exámenes')}</span>
+                    <span className="font-normal text-[#7a2038]">
+                      {t('Tất cả bài test', 'Todos los exámenes')}
+                    </span>
                   </>
                 )}
                 {activeCategory && (
                   <>
                     {' '}
                     &gt;{' '}
-                    <span>{activeCategory}</span>
+                    <span className="font-normal text-[#7a2038]">{activeCategory}</span>
                   </>
                 )}
               </div>
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 2xl:grid-cols-3 md:gap-6 xl:pl-3">
+              <div className="grid grid-cols-1 gap-5 px-3 sm:grid-cols-2 sm:px-4 2xl:grid-cols-3 md:gap-6 xl:px-0 xl:pl-3">
                 {pagedQuizzes.map((quiz) => (
                   <div key={quiz.id}>
                     <Card className="h-full overflow-hidden border border-primary/10 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
@@ -701,18 +849,6 @@ const Quizzes = () => {
                               {quiz.category_name}
                             </span>
                           )}
-                          <span
-                            className={cn(
-                              'rounded border px-2 py-0.5 text-[11px] font-semibold',
-                              quiz.has_completed
-                                ? 'border-emerald-900/20 bg-emerald-950/[0.06] text-emerald-900/85 dark:border-emerald-500/25 dark:bg-emerald-500/10 dark:text-emerald-100/90'
-                                : 'border-red-300/70 bg-red-50 text-red-700'
-                            )}
-                          >
-                            {quiz.has_completed
-                              ? t('Đã làm', 'Completado')
-                              : t('Chưa làm', 'No realizado')}
-                          </span>
                         </div>
 
                         <h3 className="mb-1.5 font-display text-[15px] font-bold leading-snug text-foreground sm:text-base md:text-[1.1rem]">
@@ -729,7 +865,7 @@ const Quizzes = () => {
                               variant="outline"
                               className="h-9 w-full rounded-md border-2 border-[#F59E0B]/70 bg-[#F59E0B]/12 text-[12px] font-semibold text-amber-950 shadow-sm transition-colors hover:border-[#F59E0B] hover:bg-[#F59E0B]/22 hover:text-amber-950 focus-visible:ring-amber-500/40 dark:border-amber-500/60 dark:bg-[#F59E0B]/16 dark:text-amber-50 dark:hover:bg-[#F59E0B]/26 dark:hover:text-amber-50 sm:text-[13px]"
                             >
-                              {t('Ôn tập', 'Repasar')}
+                              {t('Luyện tập', 'Práctica')}
                             </Button>
                           </Link>
                           <Link to={`/quiz/${quiz.id}?mode=exam`} className="min-w-0 flex-1">

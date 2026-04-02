@@ -30,7 +30,6 @@ import {
   Home,
   Lightbulb,
   RotateCcw,
-  X,
   XCircle,
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
@@ -169,22 +168,6 @@ const QuizTake = () => {
   const question = questions[currentIndex];
   const selectedId = question ? selectedAnswers[question.id] : undefined;
   const checkedForCurrent = question ? checkedMap[question.id] : undefined;
-
-  useEffect(() => {
-    if (!showExplanationPanel || mode !== 'practice' || !question?.explanation) return;
-    if (!checkedForCurrent) return;
-
-    const mq = window.matchMedia('(orientation: portrait)');
-    const sync = () => {
-      document.body.style.overflow = mq.matches ? 'hidden' : '';
-    };
-    sync();
-    mq.addEventListener('change', sync);
-    return () => {
-      mq.removeEventListener('change', sync);
-      document.body.style.overflow = '';
-    };
-  }, [showExplanationPanel, mode, question?.id, question?.explanation, checkedForCurrent]);
 
   const allQuestionsAnswered = useMemo(
     () =>
@@ -473,52 +456,72 @@ const QuizTake = () => {
   const explanationDisabled =
     mode !== 'practice' || !checkedForCurrent || !question.explanation;
 
-  const renderImageArea = () => (
-    <>
-      <div
-        className="relative flex w-full h-[clamp(120px,24dvh,180px)] items-center justify-center overflow-hidden rounded-lg border border-slate-300/60 bg-slate-50/40
-          sm:h-[clamp(130px,22dvh,190px)] md:h-[clamp(140px,20dvh,210px)]
-          landscape:h-[clamp(150px,22dvh,220px)] landscape:min-h-[150px]
-          lg:landscape:h-full lg:landscape:min-h-[240px] lg:landscape:flex-1 lg:landscape:rounded-md lg:landscape:border-0 lg:landscape:bg-transparent"
-      >
-        {question.image_url ? (
-          <img
-            src={resolveMediaUrl(question.image_url)}
-            alt="question"
-            className="mx-auto block h-auto w-auto max-h-full max-w-full object-contain object-center
-              lg:landscape:h-full lg:landscape:w-full"
+  const renderImageArea = (variant: 'stack' | 'split') => (
+    <div
+      className={
+        variant === 'split'
+          ? 'relative flex min-h-0 h-full w-full min-h-[12rem] items-center justify-center overflow-hidden rounded-lg border-0 bg-transparent lg:rounded-md'
+          : 'relative flex w-full h-[clamp(150px,30vmin,260px)] max-h-[42dvh] min-h-[130px] items-center justify-center overflow-hidden rounded-lg border-0 bg-transparent sm:h-[clamp(160px,28vmin,280px)]'
+      }
+    >
+      {question.image_url ? (
+        <img
+          src={resolveMediaUrl(question.image_url)}
+          alt="question"
+          className="mx-auto block h-auto w-auto max-h-full max-w-full object-contain object-center"
+        />
+      ) : (
+        <div
+          className={`flex h-full w-full flex-col items-center justify-center px-2 text-center text-[clamp(0.625rem,2vmin,0.8125rem)] text-muted-foreground ${variant === 'stack' ? 'pb-3 pt-2' : ''}`}
+        >
+          {t('Không có hình minh họa', 'Sin imagen')}
+        </div>
+      )}
+    </div>
+  );
+
+  const explanationToggleClass =
+    'group mt-2 flex w-full items-center gap-1.5 rounded-lg border px-[clamp(0.375rem,1.5vmin,0.75rem)] py-[clamp(0.25rem,1.35vmin,0.5rem)] text-left leading-snug transition-all duration-200 border-amber-600/55 bg-amber-50/90 text-amber-950 hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-35';
+
+  const renderPracticeExplanation = () => {
+    if (mode !== 'practice' || !question.explanation) return null;
+    return (
+      <>
+        <button
+          type="button"
+          className={explanationToggleClass}
+          disabled={explanationDisabled}
+          onClick={() => setShowExplanationPanel((prev) => !prev)}
+          aria-label={
+            showExplanationPanel
+              ? t('Ẩn giải thích', 'Ocultar explicación')
+              : t('Giải thích', 'Explicación')
+          }
+        >
+          <Lightbulb
+            className="mt-0.5 h-[clamp(1.125rem,3.2vmin,1.5rem)] w-[clamp(1.125rem,3.2vmin,1.5rem)] shrink-0"
+            aria-hidden
           />
-        ) : (
+          <span className="flex-1 pt-0.5 text-[clamp(0.9375rem,2.05vmin,1.3125rem)] font-semibold leading-snug">
+            {showExplanationPanel
+              ? t('Ẩn giải thích', 'Ocultar explicación')
+              : t('Giải thích', 'Explicación')}
+          </span>
+        </button>
+        {checkedForCurrent && showExplanationPanel && (
           <div
-            className="flex h-full w-full flex-col items-center justify-center px-2 pb-12 pt-3 text-center text-[clamp(0.625rem,2.2vmin,0.875rem)] text-muted-foreground landscape:pb-3 landscape:pt-2"
+            className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-[clamp(0.375rem,1.5vmin,0.75rem)] py-[clamp(0.25rem,1.35vmin,0.5rem)] text-left shadow-sm"
+            role="region"
+            aria-label={t('Giải thích', 'Explicación')}
           >
-            {t('Không có hình minh họa', 'Sin imagen')}
+            <p className="break-words text-[clamp(0.9375rem,2.05vmin,1.3125rem)] leading-snug text-foreground">
+              {question.explanation}
+            </p>
           </div>
         )}
-        {/* Overlay khi portrait; desktop: nút giải thích nằm dưới đáp án (cột phải) */}
-        {mode === 'practice' && (
-          <button
-            type="button"
-            className="absolute bottom-1.5 right-1.5 z-10 inline-flex max-w-[calc(100%-0.75rem)] items-center gap-1 rounded-full border border-amber-600/55 bg-amber-100/95 px-2 py-1 text-[clamp(0.5625rem,2vmin,0.75rem)] font-semibold leading-none text-amber-950 shadow-md backdrop-blur-[1px] transition hover:bg-amber-200/95 disabled:cursor-not-allowed disabled:opacity-35 sm:bottom-2 sm:right-2 md:bottom-2.5 md:right-2.5 landscape:hidden"
-            disabled={explanationDisabled}
-            onClick={() => setShowExplanationPanel((prev) => !prev)}
-            aria-label={
-              showExplanationPanel
-                ? t('Ẩn giải thích', 'Ocultar explicación')
-                : t('Giải thích', 'Explicación')
-            }
-          >
-            <Lightbulb className="h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5" aria-hidden />
-            <span className="truncate sm:max-w-none">
-              {showExplanationPanel
-                ? t('Ẩn', 'Ocultar')
-                : t('Giải thích', 'Explicación')}
-            </span>
-          </button>
-        )}
-      </div>
-    </>
-  );
+      </>
+    );
+  };
 
   const renderQuestionHeader = () => (
     <div className="mb-1.5 flex items-start gap-1 landscape:mb-2 landscape:gap-2 xl:mb-3 xl:gap-3 2xl:gap-4">
@@ -628,14 +631,43 @@ const QuizTake = () => {
       className="app-page font-sans flex h-[100dvh] max-h-[100dvh] min-h-0 flex-col overflow-hidden print:hidden select-none bg-[radial-gradient(circle_at_18%_12%,rgba(224,231,255,0.35),transparent_38%),radial-gradient(circle_at_84%_6%,rgba(226,232,240,0.45),transparent_34%),linear-gradient(180deg,#f8fafc_0%,#eef2f7_55%,#f5f7fb_100%)] p-0 md:h-screen md:max-h-screen"
     >
       <div
-        className="flex min-h-0 flex-1 flex-col overflow-hidden w-full rounded-[1rem] border border-slate-300/70 bg-white/90 shadow-[0_18px_36px_rgba(15,23,42,0.12)] p-1 sm:p-1.5 md:p-1.5 lg:p-2"
+        className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden w-full rounded-[1rem] border border-slate-300/70 bg-white/90 shadow-[0_18px_36px_rgba(15,23,42,0.12)] px-0 pt-0 pb-0.5 sm:pb-0.5 lg:pb-1"
       >
-        <div className="mb-0 shrink-0 grid grid-cols-[minmax(0,1fr)_auto] gap-1 md:gap-1.5 landscape:grid-cols-[auto_minmax(0,1fr)_auto] landscape:gap-x-2 landscape:gap-y-1">
-          <div className="col-span-2 flex w-full min-w-0 items-center justify-between gap-1.5 rounded-md border border-slate-300/70 bg-slate-50/90 px-1.5 py-1 text-[clamp(0.625rem,2.2vmin,0.875rem)] sm:px-2 landscape:col-span-1 landscape:row-span-2 landscape:w-auto landscape:max-w-full landscape:justify-start landscape:gap-2 landscape:px-2 landscape:py-1.5 landscape:text-sm">
+        <div className="shrink-0 grid grid-cols-[minmax(0,1fr)_auto] items-stretch gap-0.5 md:gap-1 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-x-1.5 lg:gap-y-0.5">
+          {/* Thứ tự: exam luôn trên cùng; logo cột trái full 2 hàng ở desktop */}
+          <div className="order-2 flex min-h-0 items-center rounded-md border border-slate-300/70 bg-slate-50/80 px-[clamp(0.3rem,1.15vmin,0.55rem)] py-[clamp(0.16rem,0.8vmin,0.32rem)] text-[clamp(0.8125rem,1.65vmin,1.0625rem)] leading-snug lg:order-none lg:col-span-1 lg:col-start-2 lg:row-start-1 lg:justify-between lg:gap-1">
+            <div className="min-w-0">
+              <span className="font-bold">{t('Đề thi', 'Examen')}:</span>
+              <span className="ml-1 break-words">{quiz.title}</span>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="hidden h-[clamp(1.4rem,3.1vmin,1.8rem)] shrink-0 rounded-md border-slate-300 bg-white px-[clamp(0.28rem,1vmin,0.5rem)] text-[clamp(0.6875rem,1.35vmin,0.8125rem)] font-semibold leading-none lg:inline-flex"
+              onClick={() => handleLeaveQuiz('/quizzes')}
+            >
+              <ArrowLeft className="mr-1 h-3 w-3" />
+              {t('Quay lại', 'Volver')}
+            </Button>
+          </div>
+
+          <div className="order-3 flex min-h-0 items-center justify-center rounded-md border border-slate-300/70 bg-slate-50/80 px-[clamp(0.3rem,1.15vmin,0.55rem)] py-[clamp(0.16rem,0.8vmin,0.32rem)] lg:order-none lg:col-span-1 lg:col-start-3 lg:row-start-1">
+            <div className="flex items-center gap-0.5">
+              <Clock className="h-[clamp(0.75rem,1.7vmin,0.95rem)] w-[clamp(0.75rem,1.7vmin,0.95rem)] shrink-0 text-muted-foreground" />
+              <span
+                className={`font-sans tabular-nums text-[clamp(0.8125rem,1.65vmin,1.0625rem)] font-bold leading-snug ${timer < 60 ? 'text-destructive' : 'text-foreground'}`}
+              >
+                {formatTimer(timer)}
+              </span>
+            </div>
+          </div>
+
+          <div className="order-1 col-span-2 flex w-full min-w-0 items-center justify-between gap-1 rounded-md border border-slate-300/70 bg-slate-50/90 px-[clamp(0.3rem,1.15vmin,0.55rem)] py-[clamp(0.16rem,0.8vmin,0.32rem)] lg:order-none lg:col-span-1 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:w-auto lg:max-w-full lg:self-stretch lg:justify-start lg:gap-1.5 lg:px-1.5">
             <button
               type="button"
               onClick={() => handleLeaveQuiz('/')}
-              className="flex min-w-0 max-w-[calc(100%-4.5rem)] items-center text-left sm:max-w-none landscape:max-w-none"
+              className="flex min-w-0 max-w-[calc(100%-4.5rem)] items-center text-left sm:max-w-none lg:max-w-none"
               aria-label={t('Về trang chủ', 'Ir a inicio')}
             >
               <BrandLogo
@@ -648,7 +680,7 @@ const QuizTake = () => {
               type="button"
               variant="outline"
               size="sm"
-              className="h-6 shrink-0 rounded-md border-slate-300 bg-white px-1.5 text-[10px] font-semibold sm:h-7 sm:px-2 sm:text-[11px] md:text-xs landscape:hidden"
+              className="h-6 shrink-0 rounded-md border-slate-300 bg-white px-1.5 text-[10px] font-semibold sm:h-7 sm:px-2 sm:text-[11px] md:text-xs lg:hidden"
               onClick={() => handleLeaveQuiz('/quizzes')}
             >
               <ArrowLeft className="mr-0.5 h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" />
@@ -656,40 +688,12 @@ const QuizTake = () => {
             </Button>
           </div>
 
-          <div className="rounded-md border border-slate-300/70 bg-slate-50/80 px-1.5 py-1 text-[clamp(0.625rem,2.2vmin,0.875rem)] leading-tight sm:px-2 landscape:col-start-2 landscape:row-start-1 landscape:flex landscape:items-center landscape:justify-between landscape:gap-2 landscape:py-1.5 landscape:text-sm landscape:leading-snug">
-            <div className="min-w-0">
-              <span className="font-bold">{t('Đề thi', 'Examen')}:</span>
-              <span className="ml-1 break-words">{quiz.title}</span>
-            </div>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="hidden h-6 shrink-0 rounded-md border-slate-300 bg-white px-1.5 text-[11px] font-semibold landscape:inline-flex landscape:h-7 landscape:px-2 landscape:text-xs"
-              onClick={() => handleLeaveQuiz('/quizzes')}
-            >
-              <ArrowLeft className="mr-1 h-3 w-3" />
-              {t('Quay lại', 'Volver')}
-            </Button>
-          </div>
-
-          <div className="flex items-center justify-center rounded-md border border-slate-300/70 bg-slate-50/80 px-1 py-0.5 landscape:col-start-3 landscape:row-start-1 landscape:px-1.5 landscape:py-1">
-            <div className="flex items-center gap-0.5 text-[clamp(0.625rem,2.2vmin,0.875rem)] landscape:text-sm">
-              <Clock className="h-2.5 w-2.5 shrink-0 text-muted-foreground sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" />
-              <span
-                className={`font-sans tabular-nums text-[clamp(0.625rem,2.2vmin,0.875rem)] font-bold landscape:text-sm ${timer < 60 ? 'text-destructive' : 'text-foreground'}`}
-              >
-                {formatTimer(timer)}
-              </span>
-            </div>
-          </div>
-
-          <div className="rounded-md border border-slate-300/70 bg-slate-50/80 px-1.5 py-1 text-[clamp(0.625rem,2.2vmin,0.875rem)] leading-tight sm:px-2 landscape:col-start-2 landscape:row-start-2 landscape:py-1.5 landscape:text-sm landscape:leading-snug">
+          <div className="order-4 flex min-h-0 items-center rounded-md border border-slate-300/70 bg-slate-50/80 px-[clamp(0.3rem,1.15vmin,0.55rem)] py-[clamp(0.16rem,0.8vmin,0.32rem)] text-[clamp(0.8125rem,1.65vmin,1.0625rem)] leading-snug lg:order-none lg:col-span-1 lg:col-start-2 lg:row-start-2">
             <span className="font-bold">{t('Thí sinh', 'Aspirante')}:</span>
-            <span className="ml-1 break-words">{candidateName}</span>
+            <span className="ml-1 min-w-0 break-words">{candidateName}</span>
           </div>
 
-          <div className="flex min-w-0 items-center justify-end px-0.5 py-1 sm:px-1 landscape:col-start-3 landscape:row-start-2 landscape:items-center landscape:py-1.5 landscape:pl-1 landscape:pr-0">
+          <div className="order-5 flex min-h-0 min-w-0 items-center justify-end px-[clamp(0.3rem,1.15vmin,0.55rem)] py-[clamp(0.16rem,0.8vmin,0.32rem)] lg:order-none lg:col-span-1 lg:col-start-3 lg:row-start-2 lg:justify-end lg:pl-1 lg:pr-0">
             <LanguageDropdown
               lang={lang}
               setLang={setLang}
@@ -697,83 +701,46 @@ const QuizTake = () => {
               align="end"
               compact
               bareTrigger
+              triggerClassName="!py-[clamp(0.12rem,0.55vmin,0.24rem)] !px-[clamp(0.28rem,0.95vmin,0.46rem)] gap-0.5 !text-[clamp(0.8125rem,1.65vmin,1.0625rem)] [&_span]:!text-[clamp(0.8125rem,1.65vmin,1.0625rem)] [&_.lang-menu-chevron]:!h-[clamp(0.68rem,1.45vmin,0.85rem)] [&_.lang-menu-chevron]:!w-[clamp(0.68rem,1.45vmin,0.85rem)]"
             />
           </div>
         </div>
 
-        {/* Portrait: một cột như điện thoại — ảnh + đề + đáp án cuộn; nút cố định dưới */}
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-slate-300/70 bg-slate-100/65 p-1 sm:p-1.5 landscape:hidden">
-          <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain rounded-lg border border-slate-300/60 bg-white px-2 py-[clamp(0.375rem,1.75dvh,0.625rem)]">
-            <div className="space-y-1.5">
-              {renderImageArea()}
+        {/* Một cột khi chiều ngang &lt; breakpoint lg (1024px) */}
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-b-lg rounded-t-none border border-slate-300/70 border-t-slate-300/60 bg-slate-100/65 p-0 lg:hidden">
+          <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain rounded-none border-0 bg-white px-1 py-1 sm:px-1">
+            <div className="space-y-1">
+              {renderImageArea('stack')}
               {error && <p className="text-xs text-destructive">{error}</p>}
               {renderQuestionHeader()}
               {renderAnswerList()}
+              {renderPracticeExplanation()}
             </div>
           </div>
-          <div className="shrink-0 border-t border-slate-200/90 bg-white px-2 pb-[max(0.15rem,env(safe-area-inset-bottom))] pt-1">
+          <div className="shrink-0 border-t border-slate-200/90 bg-white px-1 pb-[max(0.1rem,env(safe-area-inset-bottom))] pt-0.5 sm:px-1">
             {renderNavButtons()}
           </div>
         </div>
 
-        {/* Landscape: hai cột như máy tính */}
-        <div
-          className="hidden min-h-0 flex-1 grid-cols-1 grid-rows-[auto_minmax(0,1fr)] gap-2 rounded-xl border border-slate-300/70 bg-slate-100/65 p-2 landscape:grid landscape:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] landscape:grid-rows-1 landscape:gap-0 landscape:items-stretch"
-        >
-          <div
-            className="flex min-h-0 shrink-0 flex-col gap-2 rounded-xl border border-slate-300/70 bg-white p-2 sm:p-3
-              landscape:h-full landscape:min-h-[260px] landscape:gap-3 landscape:overflow-hidden landscape:rounded-r-none landscape:border-r-2 landscape:border-r-slate-300/80
-              xl:min-h-[290px] xl:gap-3
-              2xl:min-h-[320px]"
-          >
-            {renderImageArea()}
+        {/* ≥lg: ảnh 4 | chữ 6 — chỉ phụ thuộc chiều ngang, không đổi sang mobile khi cửa sổ thấp */}
+        <div className="hidden min-h-0 flex-1 grid-cols-[minmax(0,4fr)_minmax(0,6fr)] items-stretch gap-0 rounded-b-lg rounded-t-none border border-slate-300/70 border-t-slate-300/60 bg-slate-100/65 p-0 lg:grid">
+          <div className="flex min-h-0 flex-col gap-0 overflow-hidden rounded-bl-lg rounded-br-none rounded-tl-none rounded-tr-none border border-slate-300/70 border-r-2 border-r-slate-300/80 border-t-0 bg-white p-0.5 sm:p-1">
+            <div className="min-h-0 flex-1">{renderImageArea('split')}</div>
           </div>
 
-          <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-slate-300/70 bg-white landscape:h-full landscape:rounded-l-none landscape:border-l-0">
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-br-lg rounded-tl-none rounded-tr-none border border-slate-300/70 border-l-0 border-t-0 bg-white">
             {error && (
-              <p className="shrink-0 px-2 pt-1.5 text-xs text-destructive landscape:px-2.5 xl:px-4 xl:pt-2">{error}</p>
+              <p className="shrink-0 px-1 pt-1 text-xs text-destructive sm:px-1 lg:px-1">{error}</p>
             )}
 
-            <div className="flex min-h-0 flex-1 flex-col overflow-hidden px-2 pt-[clamp(0.375rem,1.5dvh,0.75rem)] pb-1 landscape:px-2.5 landscape:pb-1.5 xl:px-4 xl:pb-3 xl:pt-3">
-              <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain pr-1 [scrollbar-gutter:stable]">
+            <div className="flex min-h-0 flex-1 flex-col overflow-hidden px-1 pt-1 pb-0.5 sm:px-1 lg:px-1 lg:pb-1 lg:pt-1">
+              <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain pr-0 [scrollbar-gutter:stable]">
                 {renderQuestionHeader()}
                 {renderAnswerList()}
-                {mode === 'practice' && question.explanation && (
-                  <button
-                    type="button"
-                    className="mt-2 inline-flex w-auto max-w-[min(100%,18rem)] shrink-0 items-center gap-1 self-start rounded-full border border-amber-600/55 bg-amber-100/95 px-2.5 py-1 text-[clamp(0.625rem,1.5vmin,0.75rem)] font-semibold leading-none text-amber-950 shadow-sm backdrop-blur-[1px] transition hover:bg-amber-200/95 disabled:cursor-not-allowed disabled:opacity-35"
-                    disabled={explanationDisabled}
-                    onClick={() => setShowExplanationPanel((prev) => !prev)}
-                    aria-label={
-                      showExplanationPanel
-                        ? t('Ẩn giải thích', 'Ocultar explicación')
-                        : t('Giải thích', 'Explicación')
-                    }
-                  >
-                    <Lightbulb className="h-3 w-3 shrink-0" aria-hidden />
-                    <span className="truncate">
-                      {showExplanationPanel
-                        ? t('Ẩn', 'Ocultar')
-                        : t('Giải thích', 'Explicación')}
-                    </span>
-                  </button>
-                )}
-                {mode === 'practice' &&
-                  checkedForCurrent &&
-                  showExplanationPanel &&
-                  question.explanation && (
-                    <div className="mt-2 rounded-lg border border-amber-600/25 bg-amber-50/80 p-2 shadow-sm landscape:mt-2 landscape:p-2.5">
-                      <p className="mb-1 font-semibold text-[clamp(0.75rem,1.5vmin,0.875rem)] text-amber-950">
-                        {t('Giải thích', 'Explicación')}
-                      </p>
-                      <p className="text-[clamp(0.75rem,1.45vmin,0.9375rem)] leading-relaxed text-muted-foreground">
-                        {question.explanation}
-                      </p>
-                    </div>
-                  )}
+                {renderPracticeExplanation()}
               </div>
 
-              <div className="shrink-0 border-t border-slate-200/90 bg-white pt-1 pb-0.5 xl:pt-1.5 xl:pb-1">
+              <div className="shrink-0 border-t border-slate-200/90 bg-white py-0.5 pt-0.5 sm:pt-1 sm:pb-0.5">
                 {renderNavButtons()}
               </div>
             </div>
@@ -781,12 +748,12 @@ const QuizTake = () => {
         </div>
 
         <div
-          className="mt-0 shrink-0 rounded-md border border-slate-300/70 bg-white p-1 md:p-1.5 xl:p-2"
+          className="shrink-0 rounded-md border border-slate-300/70 bg-white px-0 py-0.5 sm:px-0 sm:py-0.5 md:py-1"
         >
           {shouldUseTwoRowsOnMobile ? (
             <>
               <div
-                className="grid gap-px landscape:hidden"
+                className="grid gap-px lg:hidden"
                 style={{ gridTemplateColumns: `repeat(${mobileTopCount}, minmax(0, 1fr))` }}
               >
                 {questions.slice(0, mobileTopCount).map((item, index) => {
@@ -804,7 +771,7 @@ const QuizTake = () => {
               </div>
 
               <div
-                className="mt-px grid gap-px landscape:hidden"
+                className="mt-px grid gap-px lg:hidden"
                 style={{
                   gridTemplateColumns: `repeat(${Math.max(questions.length - mobileTopCount, 1)}, minmax(0, 1fr))`,
                 }}
@@ -825,7 +792,7 @@ const QuizTake = () => {
               </div>
 
               <div
-                className="hidden gap-px landscape:grid landscape:grid-cols-18 xl:grid-cols-20 2xl:grid-cols-25"
+                className="hidden gap-px lg:grid lg:grid-cols-18 xl:grid-cols-20 2xl:grid-cols-25"
               >
                 {questions.map((item, index) => {
                   return (
@@ -850,7 +817,7 @@ const QuizTake = () => {
               className="grid gap-px
                          grid-cols-10
                          sm:grid-cols-15
-                         landscape:grid-cols-18
+                         lg:grid-cols-18
                          xl:grid-cols-20
                          2xl:grid-cols-25"
             >
@@ -861,7 +828,7 @@ const QuizTake = () => {
                     onClick={() => setCurrentIndex(index)}
                     className={`rounded border font-semibold transition-all
                              h-[clamp(1.375rem,3.8vmin,1.75rem)] text-[clamp(0.5625rem,1.85vmin,0.75rem)] leading-none
-                             landscape:h-7 landscape:text-xs
+                             lg:h-7 lg:text-xs
                              xl:h-8 xl:text-sm
                              2xl:h-9 2xl:text-base
                              ${getQuestionBadgeClassName(item.id, index)}`}
@@ -876,7 +843,7 @@ const QuizTake = () => {
 
           {/* Legend — nhỏ gọn; màu khớp ô số câu */}
           <div
-            className="mt-1.5 border-t border-border pt-1.5
+            className="mt-0.5 border-t border-border pt-0.5
                          flex flex-wrap items-center gap-x-1.5 gap-y-0.5
                          text-[9px] leading-tight sm:text-[10px] md:text-[11px] lg:text-xs"
           >
@@ -940,36 +907,6 @@ const QuizTake = () => {
         </div>
       </div>
 
-      {mode === 'practice' &&
-        checkedForCurrent &&
-        showExplanationPanel &&
-        question.explanation && (
-          <div
-            className="fixed inset-0 z-[120] hidden flex-col bg-background portrait:flex landscape:hidden"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="quiz-explanation-title"
-          >
-            <div className="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-white/95 px-4 py-[clamp(0.5rem,2vmin,0.75rem)] shadow-sm">
-              <p id="quiz-explanation-title" className="text-[clamp(0.875rem,2.5vmin,1.125rem)] font-semibold text-foreground">
-                {t('Giải thích', 'Explicación')}
-              </p>
-              <button
-                type="button"
-                onClick={() => setShowExplanationPanel(false)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brand-burgundy/25 bg-white text-brand-heading shadow-sm transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                aria-label={t('Đóng', 'Cerrar')}
-              >
-                <X className="h-5 w-5" strokeWidth={2.25} />
-              </button>
-            </div>
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-[clamp(0.75rem,2.5vmin,1.25rem)]">
-              <p className="text-[clamp(0.8125rem,2.6vmin,1.0625rem)] leading-relaxed text-muted-foreground">
-                {question.explanation}
-              </p>
-            </div>
-          </div>
-        )}
     </div>
   );
 };

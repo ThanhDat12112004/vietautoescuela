@@ -2,6 +2,7 @@ import { getStoredAuth } from '@/lib/auth';
 import {
   getApiBaseUrl,
   MAX_UPLOAD_IMAGE_BYTES,
+  MAX_UPLOAD_MATERIAL_BYTES,
   parseUploadError,
   withNgrokHeaders,
 } from './client';
@@ -147,6 +148,11 @@ async function uploadFile<T>(path: string, formData: FormData, fallbackErrorMess
 }
 
 export async function uploadMaterialFile(file: File, langCode: string) {
+  if (file.size > MAX_UPLOAD_MATERIAL_BYTES) {
+    const mb = Math.round(MAX_UPLOAD_MATERIAL_BYTES / (1024 * 1024));
+    throw new Error(`Tệp PDF vượt quá giới hạn ${mb} MB`);
+  }
+
   if (USE_PRESIGNED_UPLOAD) {
     try {
       return await uploadViaPresignedUrl('/media/upload-material/presign', file, {

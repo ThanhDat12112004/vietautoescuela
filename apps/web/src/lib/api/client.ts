@@ -21,6 +21,8 @@ type ApiErrorPayload = {
 };
 
 export const MAX_UPLOAD_IMAGE_BYTES = 20 * 1024 * 1024;
+/** PDF tài liệu (admin upload) — khớp giới hạn multer `upload-material` trên media-service. */
+export const MAX_UPLOAD_MATERIAL_BYTES = 200 * 1024 * 1024;
 
 const DEFAULT_API_BASE_URL = 'http://localhost:8080';
 const MAX_API_CACHE_ENTRIES = 300;
