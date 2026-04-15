@@ -1,0 +1,2002 @@
+[
+  {
+    "vi": " · Đã ẩn",
+    "es": " · Oculto",
+    "en": " · Hidden",
+    "slug": "n",
+    "files": [
+      "features/admin/admin.lang.ts"
+    ]
+  },
+  {
+    "vi": "· Đã khóa",
+    "es": "· Bloqueada",
+    "en": "· Locked",
+    "slug": "kh_a",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "· Đang ẩn",
+    "es": "· Oculta",
+    "en": "· Hidden",
+    "slug": "ang_n",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "· Hoạt động",
+    "es": "· Activa",
+    "en": "· Active",
+    "slug": "ho_t_ng",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx",
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "+ Thêm chủ đề",
+    "es": "+ Nuevo tema",
+    "en": "+ Add topic",
+    "slug": "th_m_ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "+ Thêm chủ đề bài thi",
+    "es": "+ Nuevo tema",
+    "en": "+ Add quiz topic",
+    "slug": "th_m_ch_b_i_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "+ Thêm loại chủ đề",
+    "es": "+ Nuevo grupo",
+    "en": "+ Add topic group",
+    "slug": "th_m_lo_i_ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "🇪🇸 Español",
+    "es": "🇪🇸 Español",
+    "en": "🇪🇸 Spanish",
+    "slug": "espa_ol",
+    "files": [
+      "features/admin/admin.lang.ts"
+    ]
+  },
+  {
+    "vi": "🇬🇧 Tiếng Anh",
+    "es": "🇬🇧 Inglés",
+    "en": "🇬🇧 English",
+    "slug": "ti_ng_anh",
+    "files": [
+      "features/admin/admin.lang.ts"
+    ]
+  },
+  {
+    "vi": "🇻🇳 Tiếng Việt",
+    "es": "🇻🇳 Vietnamita",
+    "en": "🇻🇳 Vietnamese",
+    "slug": "ti_ng_vi_t",
+    "files": [
+      "features/admin/admin.lang.ts"
+    ]
+  },
+  {
+    "vi": "Ẩn",
+    "es": "Oculto",
+    "en": "Hidden",
+    "slug": "n_2",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Ẩn với học viên",
+    "es": "Ocultar a alumnos",
+    "en": "Hide from students",
+    "slug": "n_v_i_h_c_vi_n",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Ảnh câu hỏi",
+    "es": "Imagen de pregunta",
+    "en": "Question image",
+    "slug": "nh_c_u_h_i",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Bước 1/2: Thông tin đề",
+    "es": "Paso 1/2: Datos del examen",
+    "en": "Step 1/2: Quiz details",
+    "slug": "b_c_1_2_th_ng_tin",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Bước 2/2: Câu hỏi & trả lời",
+    "es": "Paso 2/2: Preguntas y respuestas",
+    "en": "Step 2/2: Questions & answers",
+    "slug": "b_c_2_2_c_u_h_i_tr_l_i",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Can chon loai chu de",
+    "es": "Debes seleccionar grupo de tema",
+    "en": "Please select a topic group",
+    "slug": "can_chon_loai_chu_de",
+    "files": [
+      "screens/Admin.tsx"
+    ]
+  },
+  {
+    "vi": "Can nhap ten VI va ES",
+    "es": "Debes ingresar nombre VI y ES",
+    "en": "Enter names in Vietnamese and Spanish",
+    "slug": "can_nhap_ten_vi_va_es",
+    "files": [
+      "screens/Admin.tsx"
+    ]
+  },
+  {
+    "vi": "Cần tải lên đủ file PDF cho VI, EN và ES (số trang lấy tự động từ file).",
+    "es": "Debes subir PDF para VI, EN y ES (páginas automáticas).",
+    "en": "Upload PDFs for Vietnamese, English, and Spanish (page count is read from each file).",
+    "slug": "c_n_t_i_l_n_file_pdf_cho_vi_en_v_es_s_trang_l_y_",
+    "files": [
+      "screens/Admin.tsx"
+    ]
+  },
+  {
+    "vi": "câu",
+    "es": "preg",
+    "en": "qs",
+    "slug": "c_u",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Câu",
+    "es": "Preg",
+    "en": "Q",
+    "slug": "c_u_2",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Câu hỏi",
+    "es": "Preguntas",
+    "en": "Questions",
+    "slug": "c_u_h_i",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Câu hỏi EN",
+    "es": "Pregunta EN",
+    "en": "Question (EN)",
+    "slug": "c_u_h_i_en",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Câu hỏi ES",
+    "es": "Pregunta ES",
+    "en": "Question (ES)",
+    "slug": "c_u_h_i_es",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Câu hỏi VI",
+    "es": "Pregunta VI",
+    "en": "Question (VI)",
+    "slug": "c_u_h_i_vi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chế độ chỉnh sửa — thay đổi được lưu khi bấm Lưu",
+    "es": "Edición — los cambios se guardan al pulsar Guardar",
+    "en": "Edit mode — changes are saved when you click Save",
+    "slug": "ch_ch_nh_s_a_thay_i_c_l_u_khi_b_m_l_u",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Chỉ chấp nhận file PDF (.pdf)",
+    "es": "Solo se aceptan archivos PDF (.pdf)",
+    "en": "Only PDF files (.pdf) are allowed.",
+    "slug": "ch_ch_p_nh_n_file_pdf_pdf",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chỉ để thu hẹp danh sách chủ đề bên cạnh khi thêm/xem nhanh.",
+    "es": "Solo acota la lista de temas de al lado.",
+    "en": "Narrows the topic list beside this when adding or browsing quickly.",
+    "slug": "ch_thu_h_p_danh_s_ch_ch_b_n_c_nh_khi_th_m_xem_nh",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "chỉ PDF",
+    "es": "solo PDF",
+    "en": "PDF only",
+    "slug": "ch_pdf",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chỉnh sửa bài thi — thông tin & câu hỏi bên dưới",
+    "es": "Editar examen — datos y preguntas",
+    "en": "Edit quiz — details & questions below",
+    "slug": "ch_nh_s_a_b_i_thi_th_ng_tin_c_u_h_i_b_n_d_i",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chỉnh sửa đề thi",
+    "es": "Editar examen",
+    "en": "Edit quiz",
+    "slug": "ch_nh_s_a_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chỉnh sửa tài khoản",
+    "es": "Editar cuenta",
+    "en": "Edit account",
+    "slug": "ch_nh_s_a_t_i_kho_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Chỉnh sửa tài liệu",
+    "es": "Editar material",
+    "en": "Edit material",
+    "slug": "ch_nh_s_a_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chỉnh sửa tài liệu — tiêu đề, mô tả & file PDF",
+    "es": "Editar material — título, descripción y PDF",
+    "en": "Edit material — title, description & PDF",
+    "slug": "ch_nh_s_a_t_i_li_u_ti_u_m_t_file_pdf",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chỉnh tên và mô tả theo từng ngôn ngữ. Hiển thị cho học viên: dùng nút mắt trên danh sách.",
+    "es": "Edita nombre y descripción por idioma. Visible para alumnos: usa el icono del ojo en la lista.",
+    "en": "Edit names and descriptions per language. Visibility for students: use the eye button in the list.",
+    "slug": "ch_nh_t_n_v_m_t_theo_t_ng_ng_n_ng_hi_n_th_cho_h_",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chỉnh tên và mô tả. Hiển thị cho học viên: nút mắt trên danh sách.",
+    "es": "Edita nombre y descripción. Visible para alumnos: icono de ojo en la lista.",
+    "en": "Edit name and description. Visibility for learners: eye icon in the list.",
+    "slug": "ch_nh_t_n_v_m_t_hi_n_th_cho_h_c_vi_n_n_t_m_t_tr_",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Cho phép đề random",
+    "es": "Permitir examen aleatorio",
+    "en": "Allow random quiz",
+    "slug": "cho_ph_p_random",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Cho phép đề random trong nhóm này",
+    "es": "Permitir examen aleatorio en este grupo",
+    "en": "Allow random quiz for this group",
+    "slug": "cho_ph_p_random_trong_nh_m_n_y",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chọn chủ đề",
+    "es": "Seleccionar tema",
+    "en": "Select topic",
+    "slug": "ch_n_ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chọn loại chủ đề",
+    "es": "Grupo de tema",
+    "en": "Select topic group",
+    "slug": "ch_n_lo_i_ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chọn loại chủ đề (nhóm cha), rồi nhập tên và mô tả theo từng ngôn ngữ. Mã chủ đề được hệ thống gán tự động.",
+    "es": "Elige el grupo padre y luego el nombre y la descripción por idioma. El código lo genera el sistema.",
+    "en": "Choose the parent topic group, then enter names and descriptions per language. The topic code is assigned automatically.",
+    "slug": "ch_n_lo_i_ch_nh_m_cha_r_i_nh_p_t_n_v_m_t_theo_t_",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chọn PDF khác để thay thế — URL, dung lượng và số trang cập nhật tự động.",
+    "es": "Elija otro PDF — URL, tamaño y páginas se actualizan solos.",
+    "en": "Choose another PDF — URL, file size, and page count update automatically.",
+    "slug": "ch_n_pdf_kh_c_thay_th_url_dung_l_ng_v_s_trang_c_",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chủ đề",
+    "es": "Tema",
+    "en": "Topic",
+    "slug": "ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chủ đề bài thi",
+    "es": "Temas de examen",
+    "en": "Quiz topics",
+    "slug": "ch_b_i_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chủ đề chưa gán loại chủ đề hợp lệ",
+    "es": "Tema sin grupo de tema válido",
+    "en": "Topic has no valid topic group",
+    "slug": "ch_ch_a_g_n_lo_i_ch_h_p_l",
+    "files": [
+      "screens/Admin.tsx"
+    ]
+  },
+  {
+    "vi": "Chủ đề tài liệu",
+    "es": "Temas de material",
+    "en": "Material topics",
+    "slug": "ch_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Chưa có loại chủ đề tài liệu. Hãy thêm loại chủ đề trước.",
+    "es": "Aún no hay grupos de tema. Crea un grupo primero.",
+    "en": "No material topic groups yet. Add a topic group first.",
+    "slug": "ch_a_c_lo_i_ch_t_i_li_u_h_y_th_m_lo_i_ch_tr_c",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Cũ nhất trước",
+    "es": "Mas antiguos primero",
+    "en": "Oldest first",
+    "slug": "c_nh_t_tr_c",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Đang hiển thị theo chủ đề:",
+    "es": "Mostrando por tema:",
+    "en": "Filtered by topic:",
+    "slug": "ang_hi_n_th_theo_ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Đang hoạt động",
+    "es": "Activas",
+    "en": "Active",
+    "slug": "ang_ho_t_ng",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Đăng ký:",
+    "es": "Alta:",
+    "en": "Signed up:",
+    "slug": "ng_k",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Đang lưu...",
+    "es": "Guardando...",
+    "en": "Saving…",
+    "slug": "ang_l_u",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Đang tải chi tiết đề thi...",
+    "es": "Cargando detalle del examen...",
+    "en": "Loading quiz details…",
+    "slug": "ang_t_i_chi_ti_t_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Đang tải lên...",
+    "es": "Subiendo...",
+    "en": "Uploading…",
+    "slug": "ang_t_i_l_n",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Đánh dấu đúng",
+    "es": "Marcar correcta",
+    "en": "Mark correct",
+    "slug": "nh_d_u_ng",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Danh sách đề thi",
+    "es": "Lista de exámenes",
+    "en": "Quiz list",
+    "slug": "danh_s_ch_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Danh sách tài khoản",
+    "es": "Listado de cuentas",
+    "en": "Account list",
+    "slug": "danh_s_ch_t_i_kho_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Danh sách tài liệu",
+    "es": "Lista del temario",
+    "en": "Materials list",
+    "slug": "danh_s_ch_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Đặt lại bộ lọc",
+    "es": "Restablecer filtros",
+    "en": "Reset filters",
+    "slug": "t_l_i_b_l_c",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Đề thi này chưa có câu hỏi. Bấm \"Thêm câu\" để bắt đầu.",
+    "es": "Este examen aun no tiene preguntas. Pulse \"Agregar pregunta\".",
+    "en": "This quiz has no questions yet. Click “Add question” to start.",
+    "slug": "thi_n_y_ch_a_c_c_u_h_i_b_m_th_m_c_u_b_t_u",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Đến ngày đăng ký",
+    "es": "Hasta fecha de registro",
+    "en": "Registered until",
+    "slug": "n_ng_y_ng_k",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Điểm đạt",
+    "es": "Mínimo",
+    "en": "Passing score",
+    "slug": "i_m_t",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Đóng",
+    "es": "Cerrar",
+    "en": "Close",
+    "slug": "ng",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Đúng",
+    "es": "Ok",
+    "en": "OK",
+    "slug": "ng_2",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Dung lượng",
+    "es": "Tamaño",
+    "en": "Size",
+    "slug": "dung_l_ng",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Email",
+    "es": "Correo",
+    "en": "Email",
+    "slug": "email",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "File",
+    "es": "Archivo",
+    "en": "File",
+    "slug": "file",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "File mới (EN)",
+    "es": "Archivo nuevo (EN)",
+    "en": "New file (EN)",
+    "slug": "file_m_i_en",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "File mới (ES)",
+    "es": "Archivo nuevo (ES)",
+    "en": "New file (ES)",
+    "slug": "file_m_i_es",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "File mới (VI)",
+    "es": "Archivo nuevo (VI)",
+    "en": "New file (VI)",
+    "slug": "file_m_i_vi",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "File PDF:",
+    "es": "PDF:",
+    "en": "PDF:",
+    "slug": "file_pdf",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Gán nhóm cha và chỉnh tên, mô tả. Hiển thị cho học viên: dùng nút mắt trên danh sách.",
+    "es": "Asigna grupo padre y edita nombre y descripción. Visible para alumnos: icono del ojo en la lista.",
+    "en": "Set the parent group and edit names and descriptions. Student visibility: use the eye button in the list.",
+    "slug": "g_n_nh_m_cha_v_ch_nh_t_n_m_t_hi_n_th_cho_h_c_vi_",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Giải thích",
+    "es": "Explicación (VI)",
+    "en": "Explanation (Vietnamese)",
+    "slug": "gi_i_th_ch",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Giải thích (EN)",
+    "es": "Explicación (EN)",
+    "en": "Explanation (English)",
+    "slug": "gi_i_th_ch_en",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Giải thích (ES)",
+    "es": "Explicación",
+    "en": "Explanation (Spanish)",
+    "slug": "gi_i_th_ch_es",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Giải thích EN",
+    "es": "Explicación EN",
+    "en": "Explanation (EN)",
+    "slug": "gi_i_th_ch_en_2",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Giải thích ES",
+    "es": "Explicación ES",
+    "en": "Explanation (ES)",
+    "slug": "gi_i_th_ch_es_2",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Giải thích VI",
+    "es": "Explicación VI",
+    "en": "Explanation (VI)",
+    "slug": "gi_i_th_ch_vi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Giáo viên",
+    "es": "Profesor",
+    "en": "Teacher",
+    "slug": "gi_o_vi_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Gói Premium",
+    "es": "Plan premium",
+    "en": "Premium plan",
+    "slug": "g_i_vip",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Hiện cho học viên",
+    "es": "Mostrar a alumnos",
+    "en": "Show to students",
+    "slug": "hi_n_cho_h_c_vi_n",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Hiển thị",
+    "es": "Activo",
+    "en": "Visible",
+    "slug": "hi_n_th",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Hình ảnh",
+    "es": "Imagen",
+    "en": "Image",
+    "slug": "h_nh_nh",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Họ tên",
+    "es": "Nombre",
+    "en": "Full name",
+    "slug": "h_t_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Hoạt động",
+    "es": "Activo",
+    "en": "Active",
+    "slug": "ho_t_ng_2",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Học viên",
+    "es": "Estudiante",
+    "en": "Student",
+    "slug": "h_c_vi_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Hướng dẫn",
+    "es": "Instrucciones (VI)",
+    "en": "Instructions (Vietnamese)",
+    "slug": "h_ng_d_n",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Hướng dẫn (EN)",
+    "es": "Instrucciones (EN)",
+    "en": "Instructions (English)",
+    "slug": "h_ng_d_n_en",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Hướng dẫn (ES)",
+    "es": "Instrucciones",
+    "en": "Instructions",
+    "slug": "h_ng_d_n_es",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Hướng dẫn EN",
+    "es": "Instrucciones EN",
+    "en": "Instructions (EN)",
+    "slug": "h_ng_d_n_en_2",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Hướng dẫn ES",
+    "es": "Instrucciones ES",
+    "en": "Instructions (ES)",
+    "slug": "h_ng_d_n_es_2",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Hướng dẫn VI",
+    "es": "Instrucciones VI",
+    "en": "Instructions (VI)",
+    "slug": "h_ng_d_n_vi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Hủy",
+    "es": "Cancelar",
+    "en": "Cancel",
+    "slug": "h_y",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx",
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "khóa",
+    "es": "bloq.",
+    "en": "locked",
+    "slug": "kh_a_2",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Khóa",
+    "es": "Bloqueado",
+    "en": "Locked",
+    "slug": "kh_a_3",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Khóa / mở khóa",
+    "es": "Bloquear / desbloquear",
+    "en": "Lock / unlock",
+    "slug": "kh_a_m_kh_a",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Không",
+    "es": "Ninguno",
+    "en": "None",
+    "slug": "kh_ng",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Không tải được hồ sơ",
+    "es": "No se pudo cargar el perfil",
+    "en": "Could not load profile",
+    "slug": "kh_ng_t_i_c_h_s",
+    "files": [
+      "screens/Admin.tsx"
+    ]
+  },
+  {
+    "vi": "Loại chủ đề",
+    "es": "Grupo de tema",
+    "en": "Topic group",
+    "slug": "lo_i_ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Loại chủ đề (nhóm cha)",
+    "es": "Grupo de tema (padre)",
+    "en": "Topic group (parent)",
+    "slug": "lo_i_ch_nh_m_cha",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Loại chủ đề (nhóm tài liệu)",
+    "es": "Grupo de tema (padre)",
+    "en": "Topic group (parent)",
+    "slug": "lo_i_ch_nh_m_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Loại chủ đề bài thi",
+    "es": "Grupos de tema (examen)",
+    "en": "Quiz topic groups",
+    "slug": "lo_i_ch_b_i_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Loại chủ đề là nhóm cha để xếp các chủ đề tài liệu; điền tên và mô tả cho tiếng Việt, tiếng Anh và tiếng Tây Ban Nha.",
+    "es": "El grupo padre clasifica los temas de material; rellena nombre y descripción en vietnamita, inglés y español.",
+    "en": "Topic groups organize material topics. Enter names and descriptions in Vietnamese, English, and Spanish.",
+    "slug": "lo_i_ch_l_nh_m_cha_x_p_c_c_ch_t_i_li_u_i_n_t_n_v",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Loại chủ đề tài liệu",
+    "es": "Grupos de tema (material)",
+    "en": "Material topic groups",
+    "slug": "lo_i_ch_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Lọc theo nhóm cha",
+    "es": "Filtrar por grupo padre",
+    "en": "Filter by parent group",
+    "slug": "l_c_theo_nh_m_cha",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Lưu",
+    "es": "Guardar",
+    "en": "Save",
+    "slug": "l_u",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx",
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Mật khẩu mới (tuỳ chọn)",
+    "es": "Nueva contraseña (opcional)",
+    "en": "New password (optional)",
+    "slug": "m_t_kh_u_m_i_tu_ch_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Miễn phí",
+    "es": "Gratis",
+    "en": "Free",
+    "slug": "mi_n_ph",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Mô tả",
+    "es": "Descripción (VI)",
+    "en": "Description (VI)",
+    "slug": "m_t",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Mô tả (EN)",
+    "es": "Descripción (EN)",
+    "en": "Description (EN)",
+    "slug": "m_t_en",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Mô tả (ES)",
+    "es": "Descripción (ES)",
+    "en": "Description (ES)",
+    "slug": "m_t_es",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Mô tả (VI)",
+    "es": "Descripción (VI)",
+    "en": "Description (VI)",
+    "slug": "m_t_vi",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Mô tả EN",
+    "es": "Descripción EN",
+    "en": "Description (EN)",
+    "slug": "m_t_en_2",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Mô tả ES",
+    "es": "Descripción ES",
+    "en": "Description (ES)",
+    "slug": "m_t_es_2",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Mô tả VI",
+    "es": "Descripción VI",
+    "en": "Description (VI)",
+    "slug": "m_t_vi_2",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Mỗi chủ đề thuộc một loại chủ đề. Lọc theo nhóm cha hoặc chọn «Tất cả loại chủ đề» để xem mọi chủ đề (giống bài thi).",
+    "es": "Cada tema pertenece a un grupo. Filtra por grupo o elige «Todos los grupos» para ver todos los temas (como en exámenes).",
+    "en": "Each topic belongs to a topic group. Filter by parent group, or pick «All topic groups» to see every topic (same as quizzes).",
+    "slug": "m_i_ch_thu_c_m_t_lo_i_ch_l_c_theo_nh_m_cha_ho_c_",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Mới hôm nay",
+    "es": "Nuevas hoy",
+    "en": "New today",
+    "slug": "m_i_h_m_nay",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Mới nhất trước",
+    "es": "Mas recientes primero",
+    "en": "Newest first",
+    "slug": "m_i_nh_t_tr_c",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Nhập tên VI/ES",
+    "es": "Ingresa nombre VI/ES",
+    "en": "Enter names in Vietnamese and Spanish",
+    "slug": "nh_p_t_n_vi_es",
+    "files": [
+      "screens/Admin.tsx"
+    ]
+  },
+  {
+    "vi": "Nhập tiêu đề tiếng Anh cho tài liệu.",
+    "es": "Ingresa el título en inglés del material.",
+    "en": "Enter the English title for the material.",
+    "slug": "nh_p_ti_u_ti_ng_anh_cho_t_i_li_u",
+    "files": [
+      "screens/Admin.tsx"
+    ]
+  },
+  {
+    "vi": "Nhóm cha cho chủ đề / đề thi. Ẩn hiện với học viên: nút mắt trên từng dòng.",
+    "es": "Grupo padre para temas y exámenes. Mostrar/ocultar con el icono de ojo.",
+    "en": "Parent group for topics/quizzes. Show or hide to learners using the eye icon on each row.",
+    "slug": "nh_m_cha_cho_ch_thi_n_hi_n_v_i_h_c_vi_n_n_t_m_t_",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Nhóm cha để gom các chủ đề. Ẩn/hiện với học viên bằng nút mắt trên mỗi dòng.",
+    "es": "Grupo padre para temas. Mostrar u ocultar con el icono de ojo en cada fila.",
+    "en": "Parent groups for topics. Show or hide to learners using the eye button on each row.",
+    "slug": "nh_m_cha_gom_c_c_ch_n_hi_n_v_i_h_c_vi_n_b_ng_n_t",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Nội dung câu hỏi",
+    "es": "Texto de pregunta (VI)",
+    "en": "Question text (Vietnamese)",
+    "slug": "n_i_dung_c_u_h_i",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Nội dung câu hỏi (EN)",
+    "es": "Texto de pregunta (EN)",
+    "en": "Question text (English)",
+    "slug": "n_i_dung_c_u_h_i_en",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Nội dung câu hỏi (ES)",
+    "es": "Texto de pregunta",
+    "en": "Question text (Spanish)",
+    "slug": "n_i_dung_c_u_h_i_es",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Nội dung trả lời EN",
+    "es": "Texto respuesta EN",
+    "en": "Answer text (EN)",
+    "slug": "n_i_dung_tr_l_i_en",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Nội dung trả lời ES",
+    "es": "Texto respuesta ES",
+    "en": "Answer text (ES)",
+    "slug": "n_i_dung_tr_l_i_es",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Nội dung trả lời VI",
+    "es": "Texto respuesta VI",
+    "en": "Answer text (VI)",
+    "slug": "n_i_dung_tr_l_i_vi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Phân loại đề theo nhóm. Chọn loại chủ đề để lọc, rồi tìm hoặc thêm chủ đề mới.",
+    "es": "Clasifica exámenes por grupo. Filtra, busca o crea temas.",
+    "en": "Organize quizzes by group. Pick a topic group to filter, then search or add topics.",
+    "slug": "ph_n_lo_i_theo_nh_m_ch_n_lo_i_ch_l_c_r_i_t_m_ho_",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Quản trị viên",
+    "es": "Administración",
+    "en": "Administrator",
+    "slug": "qu_n_tr_vi_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Quay lại",
+    "es": "Atrás",
+    "en": "Back",
+    "slug": "quay_l_i",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Sắp xếp theo ngày đăng ký",
+    "es": "Ordenar por fecha",
+    "en": "Sort by signup date",
+    "slug": "s_p_x_p_theo_ng_y_ng_k",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Số trang PDF",
+    "es": "Páginas PDF",
+    "en": "PDF pages",
+    "slug": "s_trang_pdf",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Sửa",
+    "es": "Editar",
+    "en": "Edit",
+    "slug": "s_a",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Sửa bài thi",
+    "es": "Editar examen",
+    "en": "Edit quiz",
+    "slug": "s_a_b_i_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Sửa chủ đề",
+    "es": "Editar tema",
+    "en": "Edit topic",
+    "slug": "s_a_ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Sửa chủ đề bài thi",
+    "es": "Editar tema de examen",
+    "en": "Edit quiz topic",
+    "slug": "s_a_ch_b_i_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Sửa chủ đề tài liệu",
+    "es": "Editar tema de material",
+    "en": "Edit material topic",
+    "slug": "s_a_ch_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Sửa loại chủ đề bài thi",
+    "es": "Editar grupo de examen",
+    "en": "Edit quiz topic group",
+    "slug": "s_a_lo_i_ch_b_i_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Sửa loại chủ đề tài liệu",
+    "es": "Editar grupo de tema de material",
+    "en": "Edit material topic group",
+    "slug": "s_a_lo_i_ch_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Sửa tài liệu",
+    "es": "Editar material",
+    "en": "Edit material",
+    "slug": "s_a_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Sửa thông tin tài khoản",
+    "es": "Editar cuenta",
+    "en": "Edit account",
+    "slug": "s_a_th_ng_tin_t_i_kho_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Tạo bài thi mới — thông tin & câu hỏi",
+    "es": "Crear examen nuevo — datos y preguntas",
+    "en": "New quiz — details & questions",
+    "slug": "t_o_b_i_thi_m_i_th_ng_tin_c_u_h_i",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tạo đề thi",
+    "es": "Crear examen",
+    "en": "Create quiz",
+    "slug": "t_o_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tạo đề thi mới",
+    "es": "Crear examen",
+    "en": "Create quiz",
+    "slug": "t_o_thi_m_i",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tất cả chủ đề",
+    "es": "Todos los temas",
+    "en": "All topics",
+    "slug": "t_t_c_ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tất cả chủ đề (trong bộ lọc)",
+    "es": "Todos los temas (filtro actual)",
+    "en": "All topics (current filter)",
+    "slug": "t_t_c_ch_trong_b_l_c",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tất cả loại chủ đề",
+    "es": "Todos los grupos",
+    "en": "All topic groups",
+    "slug": "t_t_c_lo_i_ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tên chủ đề",
+    "es": "Nombre del tema (VI)",
+    "en": "Topic name (VI)",
+    "slug": "t_n_ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tên chủ đề (EN)",
+    "es": "Nombre del tema (EN)",
+    "en": "Topic name (EN)",
+    "slug": "t_n_ch_en",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tên đăng nhập",
+    "es": "Usuario",
+    "en": "Username",
+    "slug": "t_n_ng_nh_p",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Tên EN",
+    "es": "Nombre EN",
+    "en": "Name (EN)",
+    "slug": "t_n_en",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tên ES",
+    "es": "Nombre ES",
+    "en": "Name (ES)",
+    "slug": "t_n_es",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tên hiển thị",
+    "es": "Nombre (VI)",
+    "en": "Display name (VI)",
+    "slug": "t_n_hi_n_th",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tên hiển thị (EN)",
+    "es": "Nombre (EN)",
+    "en": "Display name (EN)",
+    "slug": "t_n_hi_n_th_en",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tên hiển thị (ES)",
+    "es": "Nombre (ES)",
+    "en": "Display name (ES)",
+    "slug": "t_n_hi_n_th_es",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tên hiển thị (VI)",
+    "es": "Nombre (VI)",
+    "en": "Display name (VI)",
+    "slug": "t_n_hi_n_th_vi",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tên VI",
+    "es": "Nombre VI",
+    "en": "Name (VI)",
+    "slug": "t_n_vi",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thêm câu",
+    "es": "Agregar pregunta",
+    "en": "Add question",
+    "slug": "th_m_c_u",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thêm chủ đề",
+    "es": "Agregar tema",
+    "en": "Add topic",
+    "slug": "th_m_ch_2",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thêm chủ đề bài thi",
+    "es": "Agregar tema de examen",
+    "en": "Add quiz topic",
+    "slug": "th_m_ch_b_i_thi_2",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thêm chủ đề tài liệu",
+    "es": "Agregar tema de material",
+    "en": "Add material topic",
+    "slug": "th_m_ch_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thêm loại chủ đề",
+    "es": "Agregar grupo de tema",
+    "en": "Add topic group",
+    "slug": "th_m_lo_i_ch_2",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thêm loại chủ đề bài thi",
+    "es": "Agregar grupo de tema de examen",
+    "en": "Add quiz topic group",
+    "slug": "th_m_lo_i_ch_b_i_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thêm loại chủ đề tài liệu",
+    "es": "Agregar grupo de tema de material",
+    "en": "Add material topic group",
+    "slug": "th_m_lo_i_ch_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thêm mới",
+    "es": "Agregar nuevo",
+    "en": "Add new",
+    "slug": "th_m_m_i",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thêm tài liệu",
+    "es": "Agregar material",
+    "en": "Add material",
+    "slug": "th_m_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thêm tài liệu song ngữ",
+    "es": "Agregar material bilingüe",
+    "en": "Add bilingual material",
+    "slug": "th_m_t_i_li_u_song_ng",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thông tin",
+    "es": "Datos",
+    "en": "Details",
+    "slug": "th_ng_tin",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Thu hẹp danh sách chủ đề bên cạnh. Chọn «Tất cả chủ đề» để xem mọi bài thi thuộc các chủ đề trong loại này (giống tài liệu).",
+    "es": "Reduce la lista de temas. «Todos los temas» muestra todos los exámenes de ese grupo.",
+    "en": "Narrows the topic list beside it. Pick “All topics” to list every quiz under this group (same as materials).",
+    "slug": "thu_h_p_danh_s_ch_ch_b_n_c_nh_ch_n_t_t_c_ch_xem_",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tiếp theo",
+    "es": "Siguiente",
+    "en": "Next",
+    "slug": "ti_p_theo",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tiêu đề",
+    "es": "Título (VI)",
+    "en": "Title (VI)",
+    "slug": "ti_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tiêu đề (EN)",
+    "es": "Título (EN)",
+    "en": "Title (EN)",
+    "slug": "ti_u_en",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tiêu đề (ES)",
+    "es": "Título",
+    "en": "Title (ES)",
+    "slug": "ti_u_es",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tiêu đề (VI)",
+    "es": "Título (VI)",
+    "en": "Title (VI)",
+    "slug": "ti_u_vi",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tiêu đề EN",
+    "es": "Título EN",
+    "en": "Title (EN)",
+    "slug": "ti_u_en_2",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tiêu đề ES",
+    "es": "Título ES",
+    "en": "Title (ES)",
+    "slug": "ti_u_es_2",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tiêu đề VI",
+    "es": "Título VI",
+    "en": "Title (VI)",
+    "slug": "ti_u_vi_2",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tìm chủ đề theo mã, tên, mô tả...",
+    "es": "Buscar por código, nombre, descripción...",
+    "en": "Search topics by code, name, description…",
+    "slug": "t_m_ch_theo_m_t_n_m_t",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tìm chủ đề theo tên, mô tả...",
+    "es": "Buscar por nombre, descripción...",
+    "en": "Search topics by name, description…",
+    "slug": "t_m_ch_theo_t_n_m_t",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tìm kiếm đề thi",
+    "es": "Buscar examen",
+    "en": "Search quizzes",
+    "slug": "t_m_ki_m_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tìm theo mã, tên, mô tả...",
+    "es": "Buscar por código, nombre, descripción...",
+    "en": "Search by code, name, description…",
+    "slug": "t_m_theo_m_t_n_m_t",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tìm theo tên đăng nhập, email hoặc họ tên…",
+    "es": "Buscar por usuario, email o nombre…",
+    "en": "Search by username, email or full name…",
+    "slug": "t_m_theo_t_n_ng_nh_p_email_ho_c_h_t_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Tìm theo tên đề, loại đề, mã...",
+    "es": "Buscar por título, tipo o código...",
+    "en": "Search by title, type, or code…",
+    "slug": "t_m_theo_t_n_lo_i_m",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tìm theo tiêu đề, mô tả VI/ES...",
+    "es": "Buscar por título, descripción VI/ES...",
+    "en": "Search by title, VI/ES description…",
+    "slug": "t_m_theo_ti_u_m_t_vi_es",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tổng số",
+    "es": "Total",
+    "en": "Total",
+    "slug": "t_ng_s",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Tổng tài khoản",
+    "es": "Total cuentas",
+    "en": "Total accounts",
+    "slug": "t_ng_t_i_kho_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Trả lời",
+    "es": "Resp.",
+    "en": "Ans.",
+    "slug": "tr_l_i",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trả lời A",
+    "es": "Respuesta A (VI)",
+    "en": "Answer A (Vietnamese)",
+    "slug": "tr_l_i_a",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trả lời A (EN)",
+    "es": "Respuesta A (EN)",
+    "en": "Answer A (English)",
+    "slug": "tr_l_i_a_en",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trả lời A (ES)",
+    "es": "Respuesta A",
+    "en": "Answer A (Spanish)",
+    "slug": "tr_l_i_a_es",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trả lời B",
+    "es": "Respuesta B (VI)",
+    "en": "Answer B (Vietnamese)",
+    "slug": "tr_l_i_b",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trả lời B (EN)",
+    "es": "Respuesta B (EN)",
+    "en": "Answer B (English)",
+    "slug": "tr_l_i_b_en",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trả lời B (ES)",
+    "es": "Respuesta B",
+    "en": "Answer B (Spanish)",
+    "slug": "tr_l_i_b_es",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trả lời C",
+    "es": "Respuesta C (VI)",
+    "en": "Answer C (Vietnamese)",
+    "slug": "tr_l_i_c",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trả lời C (EN)",
+    "es": "Respuesta C (EN)",
+    "en": "Answer C (English)",
+    "slug": "tr_l_i_c_en",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trả lời C (ES)",
+    "es": "Respuesta C",
+    "en": "Answer C (Spanish)",
+    "slug": "tr_l_i_c_es",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trả lời đúng",
+    "es": "Correcta",
+    "en": "Correct answer",
+    "slug": "tr_l_i_ng",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trạng thái",
+    "es": "Estado",
+    "en": "Status",
+    "slug": "tr_ng_th_i",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Trạng thái tài khoản",
+    "es": "Estado de la cuenta",
+    "en": "Account status",
+    "slug": "tr_ng_th_i_t_i_kho_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Truy cập",
+    "es": "Acceso",
+    "en": "Access",
+    "slug": "truy_c_p",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Từ ngày đăng ký",
+    "es": "Desde fecha de registro",
+    "en": "Registered from",
+    "slug": "t_ng_y_ng_k",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "URL (EN)",
+    "es": "URL (EN)",
+    "en": "URL (EN)",
+    "slug": "url_en",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "URL (ES)",
+    "es": "URL (ES)",
+    "en": "URL (ES)",
+    "slug": "url_es",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "URL (VI)",
+    "es": "URL (VI)",
+    "en": "URL (VI)",
+    "slug": "url_vi",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Vai trò",
+    "es": "Rol",
+    "en": "Role",
+    "slug": "vai_tr",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Premium đến (local)",
+    "es": "Premium hasta (hora local)",
+    "en": "Premium until (local time)",
+    "slug": "vip_n_local",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Vui lòng chọn chủ đề tài liệu",
+    "es": "Debes seleccionar tema",
+    "en": "Please select a material topic",
+    "slug": "vui_l_ng_ch_n_ch_t_i_li_u",
+    "files": [
+      "screens/Admin.tsx"
+    ]
+  },
+  {
+    "vi": "Xem trước ảnh câu hỏi",
+    "es": "Vista previa de imagen",
+    "en": "Question image preview",
+    "slug": "xem_tr_c_nh_c_u_h_i",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Xem trước ảnh mới",
+    "es": "Vista previa de nueva imagen",
+    "en": "New image preview",
+    "slug": "xem_tr_c_nh_m_i",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Xóa",
+    "es": "Eliminar",
+    "en": "Delete",
+    "slug": "x_a",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx",
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Xóa ảnh",
+    "es": "Quitar imagen",
+    "en": "Remove image",
+    "slug": "x_a_nh",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Xóa chủ đề",
+    "es": "Eliminar tema",
+    "en": "Delete topic",
+    "slug": "x_a_ch",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  },
+  {
+    "vi": "Xóa chủ đề bài thi",
+    "es": "Eliminar tema de examen",
+    "en": "Delete quiz topic",
+    "slug": "x_a_ch_b_i_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Xóa đề thi",
+    "es": "Eliminar examen",
+    "en": "Delete quiz",
+    "slug": "x_a_thi",
+    "files": [
+      "features/admin/quizzes/admin-quizzes-section.tsx"
+    ]
+  },
+  {
+    "vi": "Xoa loai de",
+    "es": "Eliminar tipo",
+    "en": "Delete quiz type",
+    "slug": "xoa_loai_de",
+    "files": [
+      "screens/Admin.tsx"
+    ]
+  },
+  {
+    "vi": "Xóa lớp cha",
+    "es": "Eliminar grupo padre",
+    "en": "Delete parent group",
+    "slug": "x_a_l_p_cha",
+    "files": [
+      "screens/Admin.tsx"
+    ]
+  },
+  {
+    "vi": "Xóa tài khoản",
+    "es": "Eliminar cuenta",
+    "en": "Delete account",
+    "slug": "x_a_t_i_kho_n",
+    "files": [
+      "features/admin/users/admin-users-tab.tsx"
+    ]
+  },
+  {
+    "vi": "Xóa tài liệu",
+    "es": "Eliminar material",
+    "en": "Delete material",
+    "slug": "x_a_t_i_li_u",
+    "files": [
+      "features/admin/materials/admin-materials-section.tsx"
+    ]
+  }
+]

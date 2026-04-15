@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@viet/shared-types": [
+        "packages/shared-types/src"
+      ],
+      "@viet/shared-utils": [
+        "packages/shared-utils/src"
+      ],
+      "@viet/i18n": [
+        "packages/i18n/src"
+      ]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+function notFound(_req, res) {
+  return res.status(404).json({ message: 'Endpoint not found' });
+}
+
+function errorHandler(err, _req, res, _next) {
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({ message: 'File too large' });
+  }
+  const status = err.status || 500;
+  const body = { message: err.message || 'Internal server error' };
+  if (err.details) {
+    body.errors = err.details;
+  }
+  return res.status(status).json(body);
+}
+
+module.exports = { notFound, errorHandler };

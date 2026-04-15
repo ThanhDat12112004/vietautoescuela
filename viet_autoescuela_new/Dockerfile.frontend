@@ -1,0 +1,29 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+ARG INTERNAL_API_BASE_URL=http://vietauto-api-gateway:8080
+
+COPY package.json package-lock.json ./
+COPY apps/web/package.json apps/web/package.json
+COPY packages/i18n/package.json packages/i18n/package.json
+COPY packages/shared-types/package.json packages/shared-types/package.json
+COPY packages/shared-utils/package.json packages/shared-utils/package.json
+
+RUN npm ci
+
+COPY apps/web apps/web
+COPY packages/i18n packages/i18n
+COPY packages/shared-types packages/shared-types
+COPY packages/shared-utils packages/shared-utils
+
+ENV NODE_ENV=production
+ENV WEB_PORT=3000
+ENV INTERNAL_API_BASE_URL=${INTERNAL_API_BASE_URL}
+ENV API_ORIGIN=${INTERNAL_API_BASE_URL}
+
+RUN npm run build --workspace apps/web
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start", "--workspace", "apps/web"]

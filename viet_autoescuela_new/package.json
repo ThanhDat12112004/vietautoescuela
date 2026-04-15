@@ -1,0 +1,26 @@
+{
+  "name": "viet-autoescuela-new",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "db:reset": "bash scripts/reset-mysql-fresh.sh",
+    "db:seed-gen": "node scripts/generate-init-seed.mjs",
+    "dev": "concurrently \"npm run dev --workspace api-gateway\" \"npm run dev --workspace user-service\" \"npm run dev --workspace quiz-service\" \"npm run dev --workspace media-service\" \"npm run dev --workspace stats-service\" \"npm run dev --workspace materials-service\" \"npm run dev --workspace web\"",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "eslint \"services/**/*.js\" \"apps/api-gateway/**/*.js\" && npm run lint --workspace web",
+    "test": "node --test services/user-service/test/smoke.test.cjs services/quiz-service/test/smoke.test.cjs services/media-service/test/smoke.test.cjs services/stats-service/test/smoke.test.cjs services/materials-service/test/smoke.test.cjs apps/api-gateway/test/smoke.test.cjs apps/web/test/smoke.test.cjs packages/i18n/test/smoke.test.cjs packages/shared-types/test/smoke.test.cjs packages/shared-utils/test/smoke.test.cjs",
+    "start": "npm run start --workspace api-gateway"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.17.0",
+    "globals": "^15.14.0",
+    "typescript": "^5.9.3"
+  }
+}

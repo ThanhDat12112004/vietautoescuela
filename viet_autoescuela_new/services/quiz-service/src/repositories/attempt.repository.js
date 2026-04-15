@@ -1,0 +1,246 @@
+const pool = require('../config/db');
+
+async function findActiveQuizById(quizId) {
+  const [rows] = await pool.execute(
+    `SELECT q.id
+     FROM quizzes q
+     LEFT JOIN quiz_categories c ON c.id = q.category_id
+     LEFT JOIN quiz_topic_groups qtg ON qtg.id = c.quiz_topic_group_id
+     WHERE q.id = ? AND q.is_active = TRUE
+       AND (
+         q.category_id IS NULL
+         OR (c.is_active = TRUE AND qtg.is_active = TRUE)
+       )
+     LIMIT 1`,
+    [quizId]
+  );
+
+  return rows[0] || null;
+}
+
+async function createAttempt(userId, quizId) {
+  const [result] = await pool.execute(
+    `INSERT INTO user_quiz_attempts (user_id, quiz_id, started_at, status)
+     VALUES (?, ?, NOW(), 'in_progress')`,
+    [userId, quizId]
+  );
+
+  return result.insertId;
+}
+
+async function findAttemptForSubmit(connection, attemptId, userId) {
+  const [rows] = await connection.execute(
+    `SELECT id, user_id, quiz_id, status
+     FROM user_quiz_attempts
+     WHERE id = ? AND user_id = ?
+     LIMIT 1`,
+    [attemptId, userId]
+  );
+
+  return rows[0] || null;
+}
+
+async function findAttemptByIdAndUser(attemptId, userId) {
+  const [rows] = await pool.execute(
+    `SELECT id, user_id, quiz_id, status
+     FROM user_quiz_attempts
+     WHERE id = ? AND user_id = ?
+     LIMIT 1`,
+    [attemptId, userId]
+  );
+
+  return rows[0] || null;
+}
+
+async function findQuestionByIdAndQuizId(questionId, quizId) {
+  const [rows] = await pool.execute(
+    `SELECT id, points
+     FROM questions
+     WHERE id = ? AND quiz_id = ?
+     LIMIT 1`,
+    [questionId, quizId]
+  );
+
+  return rows[0] || null;
+}
+
+async function findQuestionsByQuizId(quizId) {
+  const [rows] = await pool.query(
+    `SELECT id, points
+     FROM questions
+     WHERE quiz_id = ?
+     ORDER BY order_number ASC`,
+    [quizId]
+  );
+
+  return rows;
+}
+
+async function findAnswersByQuestionIds(questionIds) {
+  if (!Array.isArray(questionIds) || !questionIds.length) return [];
+
+  const [rows] = await pool.query(
+    `SELECT id, question_id, is_correct
+     FROM answers
+     WHERE question_id IN (?)
+       AND order_number <= 3`,
+    [questionIds]
+  );
+  return rows;
+}
+
+async function findCorrectAnswerForQuestion(questionId) {
+  const [rows] = await pool.execute(
+    `SELECT id
+     FROM answers
+     WHERE question_id = ? AND is_correct = TRUE AND order_number <= 3
+     LIMIT 1`,
+    [questionId]
+  );
+
+  return rows[0] || null;
+}
+
+async function findAnswerByIdAndQuestionId(answerId, questionId) {
+  const [rows] = await pool.execute(
+    `SELECT id
+     FROM answers
+     WHERE id = ? AND question_id = ? AND order_number <= 3
+     LIMIT 1`,
+    [answerId, questionId]
+  );
+
+  return rows[0] || null;
+}
+
+async function markAttemptCompleted(
+  connection,
+  { attemptId, score, percentage, correctCount, totalQuestions }
+) {
+  await connection.execute(
+    `UPDATE user_quiz_attempts
+     SET finished_at = NOW(),
+         completed_at = NOW(),
+         score = ?,
+         percentage = ?,
+         correct_count = ?,
+         total_questions = ?,
+         status = 'completed'
+     WHERE id = ?`,
+    [score, percentage, correctCount, totalQuestions, attemptId]
+  );
+}
+
+/** Giây làm bài: từ started_at đến completed_at (sau khi đã UPDATE completed). */
+async function getAttemptDurationSeconds(connection, attemptId) {
+  const [rows] = await connection.execute(
+    `SELECT TIMESTAMPDIFF(SECOND, started_at, completed_at) AS duration_seconds
+     FROM user_quiz_attempts
+     WHERE id = ?
+     LIMIT 1`,
+    [attemptId]
+  );
+  const raw = rows[0]?.duration_seconds;
+  if (raw == null || Number.isNaN(Number(raw))) return 0;
+  return Math.max(0, Number(raw));
+}
+
+async function upsertUserAnswer(
+  connection,
+  { attemptId, questionId, selectedAnswerId, isCorrect, pointsEarned }
+) {
+  await connection.execute(
+    `INSERT INTO user_answers (attempt_id, question_id, selected_answer_id, is_correct, points_earned)
+     VALUES (?, ?, ?, ?, ?)
+     ON DUPLICATE KEY UPDATE
+       selected_answer_id = VALUES(selected_answer_id),
+       is_correct = VALUES(is_correct),
+       points_earned = VALUES(points_earned)`,
+    [attemptId, questionId, selectedAnswerId, isCorrect, pointsEarned]
+  );
+}
+
+async function refreshUserStats(connection, userId) {
+  await connection.execute(
+    `UPDATE users u
+     JOIN (
+       SELECT
+         best.user_id,
+         COALESCE(SUM(best.score), 0) AS total_score,
+         COUNT(*) AS total_quizzes,
+         COALESCE(SUM(best.correct_count), 0) AS total_correct,
+         COALESCE(SUM(best.total_questions), 0) AS total_questions,
+         COALESCE(AVG(best.percentage), 0) AS average_percentage
+       FROM (
+         SELECT
+           ranked.user_id,
+           ranked.quiz_id,
+           ranked.score,
+           ranked.correct_count,
+           ranked.total_questions,
+           ranked.percentage
+         FROM (
+           SELECT
+             a.user_id,
+             a.quiz_id,
+             a.score,
+             a.correct_count,
+             a.total_questions,
+             a.percentage,
+             ROW_NUMBER() OVER (
+               PARTITION BY a.quiz_id
+               ORDER BY a.percentage DESC, a.score DESC, COALESCE(a.completed_at, a.started_at) DESC
+             ) AS rn
+           FROM user_quiz_attempts a
+           WHERE a.user_id = ? AND a.status = 'completed'
+         ) ranked
+         WHERE ranked.rn = 1
+       ) best
+       GROUP BY best.user_id
+     ) t ON t.user_id = u.id
+     SET u.total_score = t.total_score,
+         u.total_quizzes = t.total_quizzes,
+         u.total_correct = t.total_correct,
+         u.total_questions = t.total_questions,
+         u.average_percentage = t.average_percentage
+     WHERE u.id = ?`,
+    [userId, userId]
+  );
+
+  await connection.execute(
+    `UPDATE users
+     SET total_score = 0,
+         total_quizzes = 0,
+         total_correct = 0,
+         total_questions = 0,
+         average_percentage = 0
+     WHERE id = ?
+       AND NOT EXISTS (
+         SELECT 1
+         FROM user_quiz_attempts a
+         WHERE a.user_id = ? AND a.status = 'completed'
+       )`,
+    [userId, userId]
+  );
+}
+
+async function getConnection() {
+  return pool.getConnection();
+}
+
+module.exports = {
+  findActiveQuizById,
+  createAttempt,
+  findAttemptForSubmit,
+  findAttemptByIdAndUser,
+  findQuestionByIdAndQuizId,
+  findQuestionsByQuizId,
+  findAnswersByQuestionIds,
+  findCorrectAnswerForQuestion,
+  findAnswerByIdAndQuestionId,
+  markAttemptCompleted,
+  getAttemptDurationSeconds,
+  upsertUserAnswer,
+  refreshUserStats,
+  getConnection,
+};
